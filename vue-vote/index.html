@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vote App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../public/main.css" />
+
+</head>
+
+<body>
+    <h3 class="text-center">Story Vote App</h3>
+    <div class="container" id='app'>
+
+        <div class="card-group">
+            <div class="card">
+                <img class="card-img-top" v-bind:src="stories[0].storyImage" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a v-bind:href="stories[0].url">{{stories[0].title}}</a></h5>
+                    <p class="card-text">{{stories[0].text}}</p>
+                    <p class="card-text"><small class="text-muted">{{stories[0].postedAt}}</small></p>
+                    <button class="btn btn-primary">UpVote</button>
+                    <span class="badge badge-secondary float-right">{{stories[0].votes}}</span>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" v-bind:src="stories[1].storyImage" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a v-bind:href="stories[1].url">{{stories[1].title}}</a></h5>
+                    <p class="card-text">{{stories[1].text}}</p>
+                    <p class="card-text"><small class="text-muted">{{stories[1].postedAt}}</small></p>
+                    <button class="btn btn-primary">UpVote</button>
+                    <span class="badge badge-secondary float-right">{{stories[1].votes}}</span>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" v-bind:src="stories[2].storyImage" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a v-bind:href="stories[2].url">{{stories[2].title}}</a></h5>
+                    <p class="card-text">{{stories[2].text}}</p>
+                    <p class="card-text"><small class="text-muted">{{stories[2].postedAt}}</small></p>
+                    <button class="btn btn-primary">UpVote</button>
+                    <span class="badge badge-secondary float-right">{{stories[2].votes}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='https://unpkg.com/vue'></script>
+    <script src="./stories_seed.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
