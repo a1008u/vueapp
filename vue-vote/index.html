@@ -16,40 +16,12 @@
 
 <body>
     <h3 class="text-center">Story Vote App</h3>
-    <div class="container" id='app'>
-
-        <div class="card-group">
-            <div class="card">
-                <img class="card-img-top" v-bind:src="stories[0].storyImage" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><a v-bind:href="stories[0].url">{{stories[0].title}}</a></h5>
-                    <p class="card-text">{{stories[0].text}}</p>
-                    <p class="card-text"><small class="text-muted">{{stories[0].postedAt}}</small></p>
-                    <button class="btn btn-primary">UpVote</button>
-                    <span class="badge badge-secondary float-right">{{stories[0].votes}}</span>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" v-bind:src="stories[1].storyImage" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><a v-bind:href="stories[1].url">{{stories[1].title}}</a></h5>
-                    <p class="card-text">{{stories[1].text}}</p>
-                    <p class="card-text"><small class="text-muted">{{stories[1].postedAt}}</small></p>
-                    <button class="btn btn-primary">UpVote</button>
-                    <span class="badge badge-secondary float-right">{{stories[1].votes}}</span>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" v-bind:src="stories[2].storyImage" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><a v-bind:href="stories[2].url">{{stories[2].title}}</a></h5>
-                    <p class="card-text">{{stories[2].text}}</p>
-                    <p class="card-text"><small class="text-muted">{{stories[2].postedAt}}</small></p>
-                    <button class="btn btn-primary">UpVote</button>
-                    <span class="badge badge-secondary float-right">{{stories[2].votes}}</span>
-                </div>
-            </div>
-        </div>
+    <div class="container col-4" id='app'>
+        <story-component
+            v-for="story in sortedStories"
+            :key='story.id'
+            :story='story'
+            :stories='sortedStories'></story-component>
     </div>
 
     <script src='https://unpkg.com/vue'></script>
