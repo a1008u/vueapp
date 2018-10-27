@@ -10,7 +10,6 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
-import {members} from './member.js'
 
 export default {
   name: 'app',

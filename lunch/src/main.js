@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
+import store from './store';
 
 import GrandMenu from './components/GrandMenu.vue';
 import GroupList from './components/GroupList.vue';
@@ -19,6 +20,7 @@ const router = new VueRouter({
 });
 
 new Vue({
-  router,
+	router,
+	store,
   render: h => h(App)
 }).$mount('#app')
