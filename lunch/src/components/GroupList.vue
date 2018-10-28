@@ -1,6 +1,6 @@
 <template>
   <div id="groupList">
-    <ul v-for="(members, index) in members" :key='index'>
+    <ul v-for="(members, index) in  mkGroup" :key='index'>
       <div v-for="(member, index) in members" :key='index'>
         {{member.name}}
       </div>
@@ -9,95 +9,136 @@
 </template>
 
 <script>
-import {members} from '../group/member.js'
+// import {members} from '../group/member.js'
 import {mapGetters} from 'vuex';
 import axios from 'axios';
+import { importMembers } from '../group/member.js'
 
 export default {
   name: 'grouplist',
   data(){
     return {
       tempMembers:[],
+      applicants:[]
     }
   },
-  computed:{
-    ...mapGetters(['members']),
-    // mkGroup(){
-    //   let newMembers=[];
-    //   let copyMs = []
-    //   members.forEach(m => {
-    //     copyMs.push(m);
-    //   })
-    //   console.table(copyMs)
-
-    //   // 過去分取得
-    //   let pastGroup = this.$store.getters.members;
-    //   let group = [];
-    //   let mem = [];
-    //   let tempG = []
-    //   while(newMembers.length !== 10){
-
-    //     if(group.length !== 4) {
-    //       let random = Math.floor(Math.random() * copyMs.length);
-    //       let index = -1;
-
-    //       if (pastGroup.length !== 0) {
-    //         let v = pastGroup.length
-    //         for (let i = 0; i<v; i++) {
-    //           console.log(' ===== ')
-    //           pastGroup[i].find(m => {
-    //             if(m.name === copyMs[random].name) {
-    //               index = i;
-    //             }
-    //           })
-
-    //           if (index !== -1) {
-    //             break;
-    //           }
-    //         }
-
-    //         if(index !== -1) {
-    //           let pG = pastGroup[index];
-    //           for(let g of pG) {
-    //             tempG.push(g.name);
-    //           }
-    //         }
-    //       }
-
-    //       if(tempG.length === 0) {
-    //           mem = copyMs.splice(random, 1);
-    //           if(mem[0]) {
-    //             group.push(mem[0].name)
-    //           }
-    //       } else {
-    //         group.concat(tempG).forEach(i =>{
-    //           if(group.includes(i) && tempG.includes(i)) {
-    //             console.log(group.includes(i) + " " + tempG.includes(i))
-    //           } else {
-    //             mem = copyMs.splice(random, 1);
-    //             if(mem[0]) {
-    //               group.push(mem[0].name)
-    //             }
-    //           }
-    //         })
-    //       }
-    //     } else {
-    //       let gs = [];
-    //       group.forEach(g => {
-    //         gs.push({name: g})
-    //       })
-    //       newMembers.push(gs);
-    //       mem = [];
-    //       group = [];
-    //     }
-    //   }
-
-    //   this.tempMembers = newMembers;
-    //   return newMembers;
-    // }
+  methods:{
+   
   },
-  created(){
-    this.$store.dispatch('fetchMembers');
+  computed:{
+    mkGroup(){
+
+      // 初期化
+      if(this.applicants.length === 0) {
+        importMembers.forEach(member => this.applicants.push(member))
+      }
+
+      let newMembers = [];
+      let newGroup = [];
+      let dabuleCkGroup = [];
+      while(newMembers.length !== 10){
+
+        console.log('--- start ---')
+
+        // 新規グループ作成
+        let random = Math.floor(Math.random() * this.applicants.length);
+        if(this.applicants[random] === undefined) {
+          return this.tempMembers;
+        }
+
+        let temp = this.applicants[random].name
+        console.log(`target ${temp}`)
+        if(newGroup.length === 0) {
+          newGroup.push(temp)
+          this.applicants.splice(random, 1);
+          console.log(`newGroupの状態(start) ${newGroup}`)
+        } else {
+
+          console.log(`---- 重複確認 -----`)
+
+          // 重複確認ロジック
+          // 発見
+          if(newGroup.length >= 1) {
+            for(let group of this.$store.getters.members) {
+              for(let member of group) {
+                if (newGroup.includes(member.name)){
+                  group.forEach(tempMember =>{
+                    if(tempMember.name !== member.name) {
+                      dabuleCkGroup.push(tempMember.name);
+                    }
+                  });
+                }
+              }
+            }
+          }
+
+          console.log(`dabuleCkGroup ${dabuleCkGroup}`)
+
+          // 重複チェック
+          if(dabuleCkGroup.length !== 0) {
+
+            let ck = false;
+            if(dabuleCkGroup.includes(temp)) {
+              console.log('被り')
+              dabuleCkGroup = [];
+              ck = true;
+
+              console.log(`newMembers.length ${newMembers.length}`)
+              if(newMembers.length !== 0) {
+                // 初期化
+                newMembers = [];
+                this.applicants = [];
+                dabuleCkGroup = [];
+                newGroup = [];
+                importMembers.forEach(member => this.applicants.push(member))
+                console.log(`newMembers.length(splice後) ${newMembers.length}`)
+              }
+            }
+
+            if(!ck) {
+              newGroup.some(i =>{
+                console.log(`newGroupの確認  ${i}`)
+                if(dabuleCkGroup.includes(i)) {
+                  dabuleCkGroup = [];
+                  ck = true;
+                  return true;
+                }
+              })
+            }
+
+            if(!ck) {
+              newGroup.push(temp)
+              this.applicants.splice(random, 1);
+              dabuleCkGroup = [];
+            }
+
+          } else {
+            newGroup.push(temp)
+            this.applicants.splice(random, 1);
+            dabuleCkGroup = [];
+          }
+
+          console.log(`newGroupの状態(重複確認後) ${newGroup}`)
+
+          if(newGroup.length === 4) {
+            let tmp = [];
+            newGroup.forEach(newMember => {
+              tmp.push({name: newMember})
+            })
+            newMembers.push(tmp);
+            dabuleCkGroup = [];
+            newGroup = [];
+          }
+          console.log(`newGroupの状態 ${newGroup}`)
+			  }
+		  }
+      console.table(newMembers)
+      this.tempMembers = newMembers
+      return newMembers;
+	  }
+  },
+  async created(){
+    await this.$store.dispatch('fetchMembers');
   }
 };
 </script>
