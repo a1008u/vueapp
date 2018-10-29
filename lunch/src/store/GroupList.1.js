@@ -1,27 +1,26 @@
 import axios from 'axios';
 import { API_URL } from '../constants';
-import { importMembers } from '../group/member.js'
 
 const state = {
-	members: []
+	members1: []
 };
 
 const mutations = {
-	async UPDATE_MEMBERS(state, payload){
-		state.members = await payload;
+	async UPDATE_MEMBERS1(state, payload){
+		state.members1 = await payload;
 	}
 };
 
 const getters = {
-	members(state){
-		return state.members;
+	members1(state){
+		return state.members1;
 	}
 };
 
 const actions = {
-	async fetchMembers(context){
+	async fetchMembers1(context){
     const {data} = await axios.get(`${API_URL}/group1`);
-		context.commit('UPDATE_MEMBERS', data);
+		context.commit('UPDATE_MEMBERS1', data);
 	}
 };
 

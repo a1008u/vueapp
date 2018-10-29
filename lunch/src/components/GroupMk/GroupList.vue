@@ -9,10 +9,9 @@
 </template>
 
 <script>
-// import {members} from '../group/member.js'
 import {mapGetters} from 'vuex';
 import axios from 'axios';
-import { importMembers } from '../group/member.js'
+import { importMembers } from '../../group/member.js'
 
 export default {
   name: 'grouplist',
@@ -59,7 +58,7 @@ export default {
           // 重複確認ロジック
           // 発見
           if(newGroup.length >= 1) {
-            for(let group of this.$store.getters.members) {
+            for(let group of this.$store.getters.members1) {
               for(let member of group) {
                 if (newGroup.includes(member.name)){
                   group.forEach(tempMember =>{
