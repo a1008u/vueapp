@@ -1,6 +1,10 @@
 <template>
   <div id="groupmk">
 
+    <Drop @set-csvtext='setCsvText'></Drop>
+
+    <br><br><br><br>
+
     作成するGroup数
     <select v-model="selectedTotalGroupNum">
       <option v-for="option in options" v-bind:value="option.value">
@@ -23,7 +27,7 @@
     <button @click="useCk2 = !useCk2">GroupList button</button>
 
     <div v-if="useCk1">
-      <GroupListCheck :selectedTotalGroupNum='selectedTotalGroupNum' :selectedGroupNum='selectedGroupNum'></GroupListCheck>
+      <GroupListCheck :csvText='csvText' :selectedTotalGroupNum='selectedTotalGroupNum' :selectedGroupNum='selectedGroupNum'></GroupListCheck>
     </div>
 
     <div v-if="useCk2">
@@ -36,6 +40,7 @@
 <script>
 import GroupList from './GroupList.vue';
 import GroupListCheck from './GroupListCheck.vue';
+import Drop from './Drop.vue';
 
 export default {
   name: 'groupmk',
@@ -58,10 +63,12 @@ export default {
         { text: 'twelve', value: 12 },
       ],
       useCk1 :false,
-      useCk2 :false
+      useCk2 :false,
+      csvText:[],
     }
   },
   components:{
+    Drop: Drop,
     GroupList : GroupList,
     GroupListCheck : GroupListCheck,
   },
@@ -74,6 +81,14 @@ export default {
           this.useCk1 = true;
         }
       }
+    },
+    setCsvText(files){
+      this.csvText = files;
+      console.log('------------')
+      this.csvText.forEach(c=>{
+        console.log(c)
+      })
+      console.log('------------')
     }
   }
 };

@@ -57,7 +57,7 @@ export default {
       viewContents:false,
     }
   },
-  props:['selectedTotalGroupNum','selectedGroupNum'],
+  props:['selectedTotalGroupNum','selectedGroupNum','csvText'],
   methods:{
     fix(){
       this.modeFix = true;
@@ -162,17 +162,18 @@ export default {
     mkGroup(){
 
       if(this.applicants.length === 0) {
-        importMembers.forEach(member => this.applicants.push(member))
+        this.csvText.forEach(member => this.applicants.push(member))
       }
 
       let newMembers=[];
       let group = [];
       let newMember = [];
       while(newMembers.length !== this.selectedTotalGroupNum){
+        
         if(group.length !== this.selectedGroupNum) {
           let random = Math.floor(Math.random() * this.applicants.length);
           newMember = this.applicants.splice(random, 1);
-          group.push({name: newMember[0].name})
+          group.push({name: newMember[0]})
         } else {
           newMembers.push(group);
           newMember = [];
