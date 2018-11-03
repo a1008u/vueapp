@@ -1,9 +1,10 @@
 <template>
-  <div id="drop">
+  <div id="drop" class="drop">
     <div class="drop" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
       <div class="drop__default-container">
-          <label >{{Fileselect}}
-              <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
+          <label >
+            {{Fileselect}}
+            <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
           </label>
       </div>
     </div>
@@ -17,7 +18,6 @@ import { importMembers } from '../../group/member.js'
 import csv from 'csv-parser';
 import fileReaderStream from 'filereader-stream';
 const fs = require('fs')
-
 
 export default {
   name: 'drop',
@@ -58,7 +58,8 @@ export default {
 </script>
 
 <style scoped>
-.drop__default-container {
+.drop {
+  text-align: center;
 }
 label > input {
 	display:none;	/* アップロードボタンのスタイルを無効にする */
@@ -66,7 +67,7 @@ label > input {
 label {
 	color: rgba(0, 0, 0, 1.00);					/* ラベルテキストの色を指定する */
 	background-color: rgb(99, 211, 127);/* ラベルの背景色を指定する */
-	padding: 10px;					/* ラベルとテキスト間の余白を指定する */
+	padding: 30px;					/* ラベルとテキスト間の余白を指定する */
 	border: double 4px #AAAAAA;/* ラベルのボーダーを指定する */
 }
 </style>

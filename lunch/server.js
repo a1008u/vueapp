@@ -25,9 +25,10 @@ server.use((req, res, next) => {
 	next();
 });
 server.use((req, res, next) => {
-	if (req.method === 'POST') {
-		req.body.createdAt = Date.now();
-	}
+	// if (req.method === 'POST') {
+	// 	req.body.createdAt = Date.now();
+	// }
+	console.log(req.method);
 	// Continue to JSON Server router
 	next();
 });

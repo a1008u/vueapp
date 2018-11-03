@@ -1,26 +1,49 @@
 <template>
-  <div id="groupmk">
+  <div id="groupmk" class="groupmk">
 
-    <Drop @set-csvtext='setCsvText'></Drop>
+    <Drop @set-csvtext='setCsvText' />
 
-    <br><br><br><br>
+    <br><br>
 
-    作成するGroup数
-    <select v-model="selectedTotalGroupNum">
-      <option v-for="option in options" v-bind:value="option.value">
-        {{ option.text }}
-      </option>
-    </select>
-    <span>Selected: {{ selectedTotalGroupNum }}</span>
+    <h2 class="title">グループ数</h2>
+    <div class="columns">
+      <div class="column is-one-third"><span>Selected: {{ selectedTotalGroupNum }} groups</span></div>
+      <div class="column ">作成したグループ数を決めてください。</div>
+      <div class="column ">
+        <div class="field">
+          <div class="control">
+            <div class="select is-primary">
+              <select v-model="selectedTotalGroupNum">
+                <option v-for="option in options" v-bind:value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="title">人数</h2>
+    <div class="columns">
+      <div class="column is-one-third"><span>Selected: {{ selectedGroupNum }} 人</span></div>
+      <div class="column ">1グループ辺りの人数を決めてください。</div>
+      <div class="column ">
+        <div class="field">
+          <div class="control">
+            <div class="select is-primary">
+              <select v-model="selectedGroupNum">
+                <option v-for="option in options" v-bind:value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <br />
-
-    1グループ辺りの人数
-    <select v-model="selectedGroupNum">
-      <option v-for="option in options" v-bind:value="option.value">
-        {{ option.text }}
-      </option>
-    </select>
-    <span>Selected: {{ selectedGroupNum }}</span>
     <br />
 
     <button @click="groupListMk">GroupListCheck button</button>
@@ -85,7 +108,7 @@ export default {
     setCsvText(files){
       this.csvText = files;
       console.log('------------')
-      this.csvText.forEach(c=>{
+      this.csvText.forEach(c =>{
         console.log(c)
       })
       console.log('------------')
@@ -93,3 +116,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.groupmk{
+  margin: 20px;
+}
+.columns{
+  text-align: center;
+}
+</style>

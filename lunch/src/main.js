@@ -10,6 +10,10 @@ import GroupMk from './components/GroupMk/GroupMk.vue';
 import BackNumberMenu from './components/backnumber/BackNumberMenu.vue';
 import BackNumber from './components/backnumber/BackNumber.vue';
 
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
+
+Vue.use(Buefy)
 Vue.use(VueRouter);
 Vue.config.productionTip = false
 
@@ -23,7 +27,7 @@ const router = new VueRouter({
 		{ path: '/grandmenu', component: GrandMenu},
 		{ path: '/groupmk', component: GroupMk},
 		{ path: '/backnumbermenu', component: BackNumberMenu},
-		{ path: '/backnumber/:id', name : 'backnumber', component: BackNumber},
+		{ path: '/backnumber/:yearmonth', name : 'backnumber', component: BackNumber, props: true},
 	]
 });
 

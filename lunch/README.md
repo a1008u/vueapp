@@ -24,3 +24,5 @@ yarn run test
 ```
 yarn run lint
 ```
+
+Menlo, Monaco, 'Courier New', monospace
