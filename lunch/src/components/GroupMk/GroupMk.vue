@@ -43,11 +43,10 @@
       </div>
     </div>
 
+    <button @click="groupListMk" class="button is-info is-rounded">GroupListCheck button</button>
     <br />
     <br />
-
-    <button @click="groupListMk">GroupListCheck button</button>
-    <button @click="useCk2 = !useCk2">GroupList button</button>
+    <button @click="useCk2 = !useCk2" class="button is-info is-rounded">GroupList button</button>
 
     <div v-if="useCk1">
       <GroupListCheck :csvText='csvText' :selectedTotalGroupNum='selectedTotalGroupNum' :selectedGroupNum='selectedGroupNum'></GroupListCheck>

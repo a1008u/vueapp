@@ -1,5 +1,10 @@
 <template>
   <div id="grandmenu">
+
+    <div>
+      <router-link class="button is-info is-rounded" to="/">GrandMenu</router-link>
+    </div>
+
     <div v-for="(data, index) in total" :key="index">
 
       <h2 class="title">{{data.targetyear}}</h2>
