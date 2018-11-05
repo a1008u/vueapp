@@ -12,6 +12,7 @@
 import {mapGetters} from 'vuex';
 import axios from 'axios';
 import { importMembers } from '../../group/member.js'
+import Card from '../Card/Card';
 
 export default {
   name: 'grouplist',
@@ -22,7 +23,10 @@ export default {
     }
   },
   methods:{
-   
+
+  },
+  components:{
+    Card:Card,
   },
   computed:{
     mkGroup(){

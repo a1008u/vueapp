@@ -1,13 +1,32 @@
 <template>
   <div id="drop" class="drop">
-    <div class="drop" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
+    <!-- <div class="drop" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
       <div class="drop__default-container">
           <label >
             {{Fileselect}}
             <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
           </label>
       </div>
+    </div> -->
+
+    <div class="field" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
+      <div class="file is-centered is-boxed is-success has-name">
+        <label class="file-label">
+          <input class="file-input" type="file" name="resume">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              {{Fileselect}}
+              <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
+            </span>
+          </span>
+        </label>
+      </div>
     </div>
+
+
   </div>
 </template>
 
@@ -61,13 +80,14 @@ export default {
 .drop {
   text-align: center;
 }
-label > input {
+label > input,
+span > input  {
 	display:none;	/* アップロードボタンのスタイルを無効にする */
 }
 label {
 	color: rgba(0, 0, 0, 1.00);					/* ラベルテキストの色を指定する */
-	background-color: rgb(99, 211, 127);/* ラベルの背景色を指定する */
-	padding: 30px;					/* ラベルとテキスト間の余白を指定する */
-	border: double 4px #AAAAAA;/* ラベルのボーダーを指定する */
+	/* background-color: rgb(99, 211, 127);ラベルの背景色を指定する */
+	/* padding: 30px;					ラベルとテキスト間の余白を指定する */
+	/* border: double 4px #AAAAAA;ラベルのボーダーを指定する */
 }
 </style>

@@ -1,52 +1,12 @@
 <template>
   <div id="grandmenu">
-
-    <div>
-      <router-link class="button is-info is-rounded" to="/backnumbermenu">戻る</router-link>
+    <div class="message-header">
+      <router-link class="button is-info is-rounded" to="/backnumbermenu">back</router-link>
     </div>
 
     <br />
-    <!-- <div v-for="(members, index) in  this.group" :key='index'>
-      <div v-for="(member, index) in members" :key='index'>
-        {{member.name}}
-      </div>
-      <br/>
-    </div> -->
 
-    <div v-for="(group, groupindex) in this.group" :key='groupindex'>
-      <div class="columns is-mobile">
-        <div class="column is-one-third" v-for="(members, index) in group" :key='index'>
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                <!-- 第{{(index + 1) * (groupindex + 1)}}グループ -->
-                <span>
-                  <b-icon pack="fas" icon="users"></b-icon>
-                  Group
-                </span>
-              </p>
-            </header>
-            <div class="card-content" v-for="(member, index) in members" :key='index'>
-              <div class="content">
-                <span>
-                  <b-icon pack="fas" icon="user-circle"></b-icon>
-                  {{member.name}}
-                </span>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <!--
-                <a href="#" class="card-footer-item">Save</a>
-                <a href="#" class="card-footer-item">Edit</a>
-                <a href="#" class="card-footer-item">Delete</a>
-              -->
-            </footer>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-
+    <Card :group='group'></Card>
   </div>
 </template>
 
@@ -55,9 +15,10 @@ import {mapGetters} from 'vuex';
 import axios from 'axios';
 import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
+import Card from '../Card/Card';
 
 export default {
-  name: 'grandmenu',
+  name: 'backnumber',
   props:['targetGroup','yearmonth'],
   data(){
     return {
@@ -81,12 +42,12 @@ export default {
       newArr.push(p);                    // 取得したものを newArr に追加
     }
 
-    // this.group = data.group;
-    // console.log(data);
-
     this.group = newArr;
     console.log(this.group);
 
+  },
+  components:{
+    Card:Card,
   },
   methods:{
   },
@@ -96,3 +57,7 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+</style>

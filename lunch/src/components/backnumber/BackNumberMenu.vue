@@ -1,27 +1,26 @@
 <template>
   <div id="grandmenu">
 
-    <div>
+  <article class="message">
+    <div class="message-header">
       <router-link class="button is-info is-rounded" to="/">GrandMenu</router-link>
     </div>
-
-    <div v-for="(data, index) in total" :key="index">
-
-      <h2 class="title">{{data.targetyear}}</h2>
-      
-      <div v-for="(month, index) in data.totalmonth" :key="index">
-        <div class="columns is-mobile">
-          <div class="column is-2 is-offset-4">
-            <router-link  
-              class="tag is-info is-large"
+    <div class="message-body">
+      <nav class="pagination" role="navigation" aria-label="pagination" v-for="(data, index) in total" :key="index">
+        <h2 class="title">{{data.targetyear}}</h2>
+        <ul class="pagination-list" v-for="(month, index) in data.totalmonth" :key="index">
+          <li>
+            <router-link
+              class="button is-primary is-outlined pagination-link"
               :to="{ name : 'backnumber', params : { yearmonth:`${data.targetyear}_${month}`}}">
               {{month}}月
             </router-link>
-          </div>
-        </div>
-      </div>
-      
+          </li>
+        </ul>
+      </nav>
     </div>
+  </article>
+
   </div>
 </template>
 
@@ -33,7 +32,7 @@ import BackNumber from './BackNumber.vue';
 import { API_URL } from '../../constants';
 
 export default {
-  name: 'grandmenu',
+  name: 'backnumbermenu',
   data(){
     return {
       groups:[1,2,3],
@@ -58,3 +57,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a{
+  text-decoration:none;
+}
+</style>

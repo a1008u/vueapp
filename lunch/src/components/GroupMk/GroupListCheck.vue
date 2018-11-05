@@ -1,17 +1,16 @@
 <template>
   <div id="groupList">
     <div v-if="buttonState">
-      <button @click="confirm">入力し直す</button>
-      <button @click="save()">保存</button>
+      <div class='button is-info is-outlined' @click="confirm">入力し直す</div>
+      <div class='button is-success is-outlined' @click="save()">保存</div>
     </div>
     <div v-else>
-      <button @click="fix()">編集</button>
-      <button @click="ck()">重複確認</button>
-      <button @click="confirm()">確認</button>
+      <div class='button is-info is-outlined' @click="fix()">編集</div>
+      <div class='button is-info is-outlined' @click="ck()">重複確認</div>
+      <div class='button is-success is-outlined' @click="confirm()">確認</div>
     </div>
 
     <div v-if="viewContents">
-
       <div v-if="registerState">
         登録完了<br />
         <router-link class="navbar-brand" to="/">Home</router-link>
@@ -23,6 +22,7 @@
     </div>
     <div v-else>
       <div v-for="(members, index) in  mkGroup" :key='index'>
+
         <div v-for="(member, index) in members" :key='index'>
           {{member.name}}
           <div v-if="modeFix">
@@ -39,6 +39,7 @@
         <div v-if="out3.length !== 0">
           3回目 {{out3[index]}}
         </div>
+
         <br />
       </div>
     </div>
@@ -50,6 +51,7 @@ import {mapGetters} from 'vuex';
 import axios from 'axios';
 import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
+import Card from '../Card/Card';
 
 export default {
   name: 'grouplist',
@@ -68,6 +70,9 @@ export default {
     }
   },
   props:['selectedTotalGroupNum','selectedGroupNum','csvText'],
+  components:{
+    Card:Card,
+  },
   methods:{
     fix(){
       this.modeFix = true;
@@ -260,8 +265,24 @@ export default {
           group = [];
         }
       }
+
       this.tempMembers = newMembers;
       return newMembers;
+
+      // let b = newMembers.length ;// 26
+      // let cnt = 3;            // いくつずつに分割するか
+      // let newArr = [];             // 新しく作る配列
+
+      // for(let i = 0; i < Math.ceil(b / cnt); i++) {
+      //   let j = i * cnt;
+      //   let p = newMembers.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
+      //   newArr.push(p);                    // 取得したものを newArr に追加
+      // }
+
+      // console.log(newArr)
+
+      // this.tempMembers = newArr;
+      // return newMembers;
 	  }
   },
   async created(){
