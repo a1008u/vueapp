@@ -21,7 +21,11 @@
       </div>
     </div>
     <div v-else>
-      <div v-for="(members, index) in  mkGroup" :key='index'>
+
+      <!-- <Cardedit :group='mkGroup' :modeFix='modeFix'></Cardedit> -->
+      <Cardedit :group='mkGroup' :modeFix='modeFix' :out1='out1' :out2='out2' :out3='out3'></Cardedit>
+
+      <!-- <div v-for="(members, index) in  mkGroup" :key='index'>
 
         <div v-for="(member, index) in members" :key='index'>
           {{member.name}}
@@ -41,7 +45,8 @@
         </div>
 
         <br />
-      </div>
+      </div> -->
+
     </div>
   </div>
 </template>
@@ -51,7 +56,7 @@ import {mapGetters} from 'vuex';
 import axios from 'axios';
 import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
-import Card from '../Card/Card';
+import Cardedit from '../Card/CardEdit';
 
 export default {
   name: 'grouplist',
@@ -62,6 +67,7 @@ export default {
       out1 :[],
       out2 :[],
       out3 :[],
+      groups :[],
       modeFix :false,
       buttonState:false,
       viewContents:false,
@@ -71,11 +77,11 @@ export default {
   },
   props:['selectedTotalGroupNum','selectedGroupNum','csvText'],
   components:{
-    Card:Card,
+    Cardedit:Cardedit,
   },
   methods:{
     fix(){
-      this.modeFix = true;
+      this.modeFix = !this.modeFix;
     },
     confirm(){
       this.buttonState = !this.buttonState;
@@ -235,11 +241,25 @@ export default {
       const outGroup1 = this.mkOutGroup(ckGroups, dabuleCkGroupList1);
       const outGroup2 = this.mkOutGroup(ckGroups, dabuleCkGroupList2);
       const outGroup3 = this.mkOutGroup(ckGroups, dabuleCkGroupList3);
-      this.out1 = outGroup1;
+
+      // TODO methodへ
+      let b = outGroup1.length ;// 26
+      let cnt = 3;            // いくつずつに分割するか
+      let newArr = [];             // 新しく作る配列
+
+      for(let i = 0; i < Math.ceil(b / cnt); i++) {
+        let j = i * cnt;
+        let p = outGroup1.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
+        newArr.push(p);                    // 取得したものを newArr に追加
+      }
+
+
+
+      this.out1 = newArr;
       this.out2 = outGroup2;
       this.out3 = outGroup3;
       console.log('------------------');
-      console.log(outGroup1);
+      console.log(this.out1);
       console.log(outGroup2);
       console.log(outGroup3);
     }
@@ -267,22 +287,21 @@ export default {
       }
 
       this.tempMembers = newMembers;
-      return newMembers;
+      let b = newMembers.length ;// 26
+      let cnt = 3;            // いくつずつに分割するか
+      let newArr = [];             // 新しく作る配列
 
-      // let b = newMembers.length ;// 26
-      // let cnt = 3;            // いくつずつに分割するか
-      // let newArr = [];             // 新しく作る配列
+      for(let i = 0; i < Math.ceil(b / cnt); i++) {
+        let j = i * cnt;
+        let p = newMembers.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
+        newArr.push(p);                    // 取得したものを newArr に追加
+      }
 
-      // for(let i = 0; i < Math.ceil(b / cnt); i++) {
-      //   let j = i * cnt;
-      //   let p = newMembers.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
-      //   newArr.push(p);                    // 取得したものを newArr に追加
-      // }
+      console.log(newArr)
 
-      // console.log(newArr)
-
-      // this.tempMembers = newArr;
+      this.groups = newArr;
       // return newMembers;
+      return this.groups 
 	  }
   },
   async created(){

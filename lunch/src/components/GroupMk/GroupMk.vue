@@ -122,11 +122,9 @@ export default {
     },
     setCsvText(files){
       this.csvText = files;
-      console.log('------------')
       this.csvText.forEach(c =>{
         console.log(c)
       })
-      console.log('------------')
     }
   }
 };
