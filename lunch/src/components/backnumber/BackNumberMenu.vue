@@ -5,9 +5,10 @@
     <div class="message-header">
       <router-link class="button is-info is-rounded" to="/">GrandMenu</router-link>
     </div>
-    <div class="message-body">
+
+    <!-- <div class="message-body">
       <nav class="pagination" role="navigation" aria-label="pagination" v-for="(data, index) in total" :key="index">
-        <h2 class="title">{{data.targetyear}}</h2>
+        <div class="tag is-info  is-medium">{{data.targetyear}}</div>
         <ul class="pagination-list" v-for="(month, index) in data.totalmonth" :key="index">
           <li>
             <router-link
@@ -18,7 +19,25 @@
           </li>
         </ul>
       </nav>
+    </div> -->
+
+    <br />
+
+    <div class="box"  v-for="(data, index) in total" :key="index">
+      <div class="columns is-mobile is-centered">
+        <div class="tag is-info is-large">{{data.targetyear}}</div>
+        <ul class="pagination-list" v-for="(month, index) in data.totalmonth" :key="index">
+          <li>
+            <router-link
+              class="button is-primary is-outlined pagination-link"
+              :to="{ name : 'backnumber', params : { yearmonth:`${data.targetyear}_${month}`}}">
+              {{month}}月
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
+
   </article>
 
   </div>

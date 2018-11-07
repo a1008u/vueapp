@@ -1,14 +1,5 @@
 <template>
   <div id="groupList">
-    <div v-if="buttonState">
-      <div class='button is-info is-outlined' @click="confirm">入力し直す</div>
-      <div class='button is-success is-outlined' @click="save()">保存</div>
-    </div>
-    <div v-else>
-      <div class='button is-info is-outlined' @click="fix()">編集</div>
-      <div class='button is-info is-outlined' @click="ck()">重複確認</div>
-      <div class='button is-success is-outlined' @click="confirm()">確認</div>
-    </div>
 
     <div v-if="viewContents">
       <div v-if="registerState">
@@ -21,32 +12,42 @@
       </div>
     </div>
     <div v-else>
+      <div v-if="buttonState">
 
-      <!-- <Cardedit :group='mkGroup' :modeFix='modeFix'></Cardedit> -->
-      <Cardedit :group='mkGroup' :modeFix='modeFix' :out1='out1' :out2='out2' :out3='out3'></Cardedit>
-
-      <!-- <div v-for="(members, index) in  mkGroup" :key='index'>
-
-        <div v-for="(member, index) in members" :key='index'>
-          {{member.name}}
-          <div v-if="modeFix">
-            <textarea v-model="member.name"></textarea>
+        <div class="box">
+          <div class="columns is-mobile is-centered">
+            <div class="column is-half">
+              <div class='button is-info is-outlined' @click="confirm">入力し直す</div>
+            </div>
+            <div class="column is-half">
+              <div class='button is-success is-outlined' @click="save()">保存</div>
+            </div>
           </div>
         </div>
 
-        <div v-if="out1.length !== 0">
-          1回目 {{out1[index]}}
-        </div>
-        <div v-if="out2.length !== 0">
-          2回目 {{out2[index]}}
-        </div>
-        <div v-if="out3.length !== 0">
-          3回目 {{out3[index]}}
+      </div>
+      <div v-else>
+
+        <div class="box">
+          <div class="columns is-mobile is-centered">
+            <div class="column is-one-third">
+              <div class='button is-info is-outlined' @click="fix()">編集</div>
+            </div>
+            <div class="column is-one-third">
+              <div class='button is-info is-outlined' @click="ck()">重複確認</div>
+            </div>
+            <div class="column is-one-third">
+              <div class='button is-success is-outlined' @click="confirm()">確認</div>
+            </div>
+          </div>
         </div>
 
-        <br />
-      </div> -->
+      </div>
+      
+      <br />
 
+      <Cardedit :group='mkGroup' :modeFix='modeFix'
+                :out1='out1' :out2='out2' :out3='out3'></Cardedit>
     </div>
   </div>
 </template>
@@ -85,6 +86,7 @@ export default {
     },
     confirm(){
       this.buttonState = !this.buttonState;
+      this.modeFix = false;
     },
     async saveTotal(year, month){
       const {data} = await axios.get(`${API_URL}/total`);
@@ -215,6 +217,18 @@ export default {
       });
       return outGroup;
     },
+    mkViewGroup(outGroup) {
+      let b = outGroup.length ;// 26
+      let cnt = 3;            // いくつずつに分割するか
+      let newArr = [];             // 新しく作る配列
+
+      for(let i = 0; i < Math.ceil(b / cnt); i++) {
+        let j = i * cnt;
+        let p = outGroup.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
+        newArr.push(p);                    // 取得したものを newArr に追加
+      }
+      return newArr
+    },
     async ck(){
       console.log(' -------- ')
       // mainロジック --------------------------------------
@@ -222,7 +236,6 @@ export default {
 
       // 検索対象変形
       const ckGroups = this.mkCkGroups();
-      console.log(`ckGroups ${ckGroups}`);
 
       // チェック対処を取得
       const targetYearMonths = await this.mkTargetYearMonths();
@@ -232,10 +245,7 @@ export default {
       const dabuleCkGroupList1 = this.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
       const dabuleCkGroupList2 = this.mkDabuleCkGroupList(ckGroups, yearMonth[1]);
       const dabuleCkGroupList3 = this.mkDabuleCkGroupList(ckGroups, yearMonth[2]);
-      console.log('------------------');
-      console.log(dabuleCkGroupList1);
-      console.log(dabuleCkGroupList2);
-      console.log(dabuleCkGroupList3);
+
 
       // 該当箇所を抽出
       const outGroup1 = this.mkOutGroup(ckGroups, dabuleCkGroupList1);
@@ -243,25 +253,13 @@ export default {
       const outGroup3 = this.mkOutGroup(ckGroups, dabuleCkGroupList3);
 
       // TODO methodへ
-      let b = outGroup1.length ;// 26
-      let cnt = 3;            // いくつずつに分割するか
-      let newArr = [];             // 新しく作る配列
-
-      for(let i = 0; i < Math.ceil(b / cnt); i++) {
-        let j = i * cnt;
-        let p = outGroup1.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
-        newArr.push(p);                    // 取得したものを newArr に追加
-      }
-
-
-
-      this.out1 = newArr;
-      this.out2 = outGroup2;
-      this.out3 = outGroup3;
+      this.out1 = this.mkViewGroup(outGroup1);
+      this.out2 = this.mkViewGroup(outGroup2);
+      this.out3 = this.mkViewGroup(outGroup3);
       console.log('------------------');
       console.log(this.out1);
-      console.log(outGroup2);
-      console.log(outGroup3);
+      console.log(this.out2);
+      console.log(this.out3);
     }
   },
   computed:{
@@ -308,3 +306,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.columns{
+  text-align: center;
+}
+</style>

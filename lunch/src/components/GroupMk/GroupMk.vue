@@ -4,61 +4,8 @@
     <div class="message-header">
       <router-link class="button is-info is-rounded" to="/">GroudMenu</router-link>
     </div>
-    <br />
-    <br />
 
-    <Drop @set-csvtext='setCsvText' />
-
-    <br><br>
-
-    <div class="box">
-      <div class="columns is-mobile is-centered">
-        <div class="column is-half"><h2 class="title">グループ数</h2></div>
-        <div class="column is-half"><h2 class="title">Selected: {{ selectedTotalGroupNum }} groups</h2></div>
-      </div>
-      <div class="columns is-mobile is-centered">
-        <div class="column is-half">作成したグループ数を決めてください。</div>
-        <div class="column is-half">
-          <div class="field select is-primary">
-            <select v-model="selectedTotalGroupNum">
-              <option v-for="option in options" v-bind:value="option.value">
-                {{ option.text }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="columns is-mobile is-centered">
-        <div class="column is-half"><h2 class="title">人数</h2></div>
-        <div class="column is-half"><h2 class="title">Selected: {{ selectedGroupNum }} 人</h2></div>
-      </div>
-      <div class="columns is-mobile is-centered">
-        <div class="column is-half">1グループ辺りの人数を決めてください。</div>
-        <div class="column is-half">
-          <div class="field select is-primary">
-            <select v-model="selectedGroupNum">
-              <option v-for="option in options" v-bind:value="option.value">
-                {{ option.text }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="columns is-mobile is-centered">
-        <div class="column is-half">
-          <button @click="groupListMk" class="button is-info is-rounded">GroupListCheck button</button>
-        </div>
-        <div class="column is-half">
-          <button @click="useCk2 = !useCk2" class="button is-info is-rounded">GroupList button</button>
-        </div>
-      </div>
-    </div>
+    <br>
 
     <div v-if="useCk1">
       <GroupListCheck
@@ -67,9 +14,62 @@
         :selectedGroupNum='selectedGroupNum'>
       </GroupListCheck>
     </div>
-
-    <div v-if="useCk2">
+    <div v-else-if="useCk2">
       <GroupList></GroupList>
+    </div>
+    <div v-else>
+
+      <Drop @set-csvtext='setCsvText'/><br>
+
+      <div class="box">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half"><h2 class="title">グループ数</h2></div>
+          <div class="column is-half"><h2 class="title">Selected: {{ selectedTotalGroupNum }} groups</h2></div>
+        </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">作成したグループ数を決めてください。</div>
+          <div class="column is-half">
+            <div class="field select is-primary">
+              <select v-model="selectedTotalGroupNum">
+                <option v-for="option in options" v-bind:value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half"><h2 class="title">人数</h2></div>
+          <div class="column is-half"><h2 class="title">Selected: {{ selectedGroupNum }} 人</h2></div>
+        </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">1グループ辺りの人数を決めてください。</div>
+          <div class="column is-half">
+            <div class="field select is-primary">
+              <select v-model="selectedGroupNum">
+                <option v-for="option in options" v-bind:value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+            <button @click="groupListMk" class="button is-info is-rounded">GroupListCheck button</button>
+          </div>
+          <div class="column is-half">
+            <button @click="useCk2 = !useCk2" class="button is-info is-rounded">GroupList button</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
