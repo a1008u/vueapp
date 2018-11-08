@@ -12,38 +12,11 @@
       </div>
     </div>
     <div v-else>
-      <div v-if="buttonState">
 
-        <div class="box">
-          <div class="columns is-mobile is-centered">
-            <div class="column is-half">
-              <div class='button is-info is-outlined' @click="confirm">入力し直す</div>
-            </div>
-            <div class="column is-half">
-              <div class='button is-success is-outlined' @click="save()">保存</div>
-            </div>
-          </div>
-        </div>
+      <RegisterButtonSet :buttonState='buttonState' :viewContents='viewContents' :registerState='registerState'
+                          @save='save' @confirm='confirm'
+                          @fix='fix' @ck='ck'></RegisterButtonSet>
 
-      </div>
-      <div v-else>
-
-        <div class="box">
-          <div class="columns is-mobile is-centered">
-            <div class="column is-one-third">
-              <div class='button is-info is-outlined' @click="fix()">編集</div>
-            </div>
-            <div class="column is-one-third">
-              <div class='button is-info is-outlined' @click="ck()">重複確認</div>
-            </div>
-            <div class="column is-one-third">
-              <div class='button is-success is-outlined' @click="confirm()">確認</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      
       <br />
 
       <Cardedit :group='mkGroup' :modeFix='modeFix'
@@ -58,6 +31,7 @@ import axios from 'axios';
 import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
 import Cardedit from '../Card/CardEdit';
+import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
 
 export default {
   name: 'grouplist',
@@ -79,6 +53,7 @@ export default {
   props:['selectedTotalGroupNum','selectedGroupNum','csvText'],
   components:{
     Cardedit:Cardedit,
+    RegisterButtonSet:RegisterButtonSet,
   },
   methods:{
     fix(){

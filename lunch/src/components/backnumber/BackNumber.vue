@@ -6,7 +6,16 @@
 
     <br />
 
-    <Card :group='group'></Card>
+    <!-- <Card :group='group'></Card> -->
+
+    <RegisterButtonSet :buttonState='buttonState'
+        @save='save' @confirm='confirm' @fix='fix' @ck='ck'></RegisterButtonSet>
+
+    <br />
+
+    <Cardedit :group='group' :modeFix='modeFix'
+              :out1='out1' :out2='out2' :out3='out3'></Cardedit>
+
   </div>
 </template>
 
@@ -16,6 +25,8 @@ import axios from 'axios';
 import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
 import Card from '../Card/Card';
+import Cardedit from '../Card/CardEdit';
+import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
 
 export default {
   name: 'backnumber',
@@ -24,6 +35,10 @@ export default {
     return {
       tempMembers:[],
       group:[],
+      out1 :[],
+      out2 :[],
+      out3 :[],
+      modeFix :false,
     }
   },
   async mounted() {
@@ -48,6 +63,8 @@ export default {
   },
   components:{
     Card:Card,
+    Cardedit:Cardedit,
+    RegisterButtonSet:RegisterButtonSet,
   },
   methods:{
   },
