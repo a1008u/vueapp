@@ -1,0 +1,15 @@
+version: '2'
+services:
+
+  lunch_dev:
+    build:
+      context: ../../
+      dockerfile: ./docker/dev/Dockerfile
+    image: lunch_i
+    working_dir: /app
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    command: ash -c
+        'npm run dev
+        && http-server dist'
