@@ -32,6 +32,8 @@ import { importMembers } from '../../group/member.js'
 import { API_URL } from '../../constants';
 import Cardedit from '../Card/CardEdit';
 import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
+import Save from '../../util/Save.js';
+import Daily from '../../util/Daily.js';
 
 export default {
   name: 'grouplist',
@@ -63,36 +65,7 @@ export default {
       this.buttonState = !this.buttonState;
       this.modeFix = false;
     },
-    async saveTotal(year, month){
-      const {data} = await axios.get(`${API_URL}/total`);
-        let registerMonths ={};
-        let months = [];
-        let needNewYearFlag = true;
-        data.forEach(target => {
-          if(target.totalmonth.length !== 12) {
-            target.totalmonth.forEach(month => months.push(month))
-            needNewYearFlag = false;
-          }
-        })
-
-        if(needNewYearFlag) {
-          months.push(month)
-        }
-
-        months.push(month.toString())
-        registerMonths.id = year;
-        registerMonths.targetyear = year
-        registerMonths.totalmonth = months;
-        console.log(registerMonths);
-        const {registerData} = await axios.put(`${API_URL}/total/${year}`, registerMonths, this.config);
-    },
-    async saveGroup(year, month){
-      let registerGroup = {};
-      registerGroup.id = month.toString();
-      registerGroup.group = this.tempMembers
-      const {registerDatas} = await axios.post(`${API_URL}/${year}`, registerGroup, this.config);
-    }
-    ,async save(){
+    async save(){
       this.viewContents = !this.viewContents;
       const dt = new Date();
       const year = dt.getFullYear();
@@ -100,44 +73,21 @@ export default {
       let targetYearMonth = `${year}${month}`;
 
       // 保存処理実施確認
-      const targetYearMonths = await this.mkTargetYearMonths();
+      const targetYearMonths = await Daily.mkTargetYearMonths();
       if(!targetYearMonths.includes(Number(targetYearMonth))) {
 
         // totalの登録 -------------------------------
-        this.saveTotal(year, month);
+        // this.saveTotal(year, month);
+        Save.saveTotal(year, month, this.config)
 
         // groupの登録 -------------------------------
-        this.saveGroup(year, month);
+        // this.saveGroup(year, month, this.tempMembers);
+        Save.saveGroup(year, month, this.tempMembers, this.config);
 
         // 状態変更 -------------------------------
         this.registerState = !this.registerState;
       }
 
-    },
-    async mkTargetYearMonths() {
-      let targetYearMonths = [];
-      const {data} = await axios.get(`${API_URL}/total`);
-      data.forEach(target => {
-        target.totalmonth.forEach(month => {
-          let yearmonth = `${target.targetyear}${month}`
-          targetYearMonths.push(Number(yearmonth))
-        })
-      })
-      targetYearMonths.sort((a,b) => (a < b ? 1 : -1));
-      console.log(`targetYearMonth ${targetYearMonths}`)
-      return targetYearMonths;
-    },
-    async mkTargetYearMonth(targetYearMonths){
-      let yearMonth = [];
-      for(let i=0; i < 3; i++) {
-        let year = targetYearMonths[i].toString().slice(0,4);
-        let month = targetYearMonths[i].toString().slice(4,6);
-        const {data} = await axios.get(`${API_URL}/${year}/${month}`);
-        console.log(`${i}回目`)
-        console.table(data)
-        yearMonth.push(data)
-      }
-      return yearMonth;
     },
     mkCkGroups(){
       let ckGroups = [];
@@ -213,8 +163,8 @@ export default {
       const ckGroups = this.mkCkGroups();
 
       // チェック対処を取得
-      const targetYearMonths = await this.mkTargetYearMonths();
-      let yearMonth = await this.mkTargetYearMonth(targetYearMonths)
+      const targetYearMonths = await Daily.mkTargetYearMonths();
+      let yearMonth = await Daily.mkTargetYearMonth(targetYearMonths)
 
       // チェック
       const dabuleCkGroupList1 = this.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
@@ -274,7 +224,7 @@ export default {
 
       this.groups = newArr;
       // return newMembers;
-      return this.groups 
+      return this.groups
 	  }
   },
   async created(){

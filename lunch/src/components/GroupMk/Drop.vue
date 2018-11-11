@@ -1,13 +1,5 @@
 <template>
   <div id="drop" class="drop">
-    <!-- <div class="drop" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
-      <div class="drop__default-container">
-          <label >
-            {{Fileselect}}
-            <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
-          </label>
-      </div>
-    </div> -->
 
     <div class="field" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
       <div class="file is-centered is-boxed is-success has-name">
@@ -51,7 +43,7 @@ export default {
     onDrop:function(event){
       let fileList = event.target.files ? event.target.files: event.dataTransfer.files;
       console.log(fileList[0])
-      if(fileList){
+      if(fileList) {
         this.Fileselect = fileList[0].name
 
         const reader = new FileReader
@@ -59,7 +51,6 @@ export default {
         let results = [];
 
         reader.onload = (e) => {
-          // console.log(reader.result)
           results = e.target.result.replace(/\n/ig, '').split(',');
           console.log(results)
           this.$emit('set-csvtext', results);

@@ -40,10 +40,23 @@ docker build -t lunch .
 docker run -it -p 8080:8080 --rm --name docker-lunch lunch
 ```
 
-docker-compseからの作成（dockerディレクトリの作成）
+docker-compseからの作成（develop環境）
 ``` docker-compose
 docker-compose -f docker/dev/docker-compose.yml  up --build
 ```
-``` docker-compose
+``` docker-compose（prduction環境）
 docker-compose -f docker/pro/docker-compose.yml  up --build
 ```
+
+
+GCPを利用
+```
+docker run --rm \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:/rootfs/$PWD" \
+    -w="/rootfs/$PWD" \
+    docker/compose:1.22.0 up --build
+```
+
+// babelの対策
+https://qiita.com/oreo3@github/items/b383c57949e0f117cbea

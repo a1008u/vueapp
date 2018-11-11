@@ -14,8 +14,8 @@
           </div>
         </div>
 
-      </div>
-      <div v-else>
+    </div>
+    <div v-else>
 
         <div class="box">
           <div class="columns is-mobile is-centered">

@@ -6,10 +6,9 @@
 
     <br />
 
-    <!-- <Card :group='group'></Card> -->
-
     <RegisterButtonSet :buttonState='buttonState'
-        @save='save' @confirm='confirm' @fix='fix' @ck='ck'></RegisterButtonSet>
+        @save='save' @confirm='confirm'
+        @fix='fix' @ck='ck'></RegisterButtonSet>
 
     <br />
 
@@ -39,6 +38,7 @@ export default {
       out2 :[],
       out3 :[],
       modeFix :false,
+      buttonState: false,
     }
   },
   async mounted() {
