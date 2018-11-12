@@ -10,25 +10,25 @@ export async function saveGroup(year, month, tempMembers, config){
 
 export async function saveTotal(year, month, config){
   const {data} = await axios.get(`${API_URL}/total`);
-    let registerMonths ={};
-    let months = [];
-    let needNewYearFlag = true;
-    data.forEach(target => {
-      if(target.totalmonth.length !== 12) {
-        target.totalmonth.forEach(month => months.push(month))
-        needNewYearFlag = false;
-      }
-    })
-
-    if(needNewYearFlag) {
-      months.push(month)
+  let registerMonths ={};
+  let months = [];
+  let needNewYearFlag = true;
+  data.forEach(target => {
+    if (target.totalmonth.length !== 12) {
+      target.totalmonth.forEach(month => months.push(month))
+      needNewYearFlag = false;
     }
+  })
 
-    months.push(month.toString())
-    registerMonths.id = year;
-    registerMonths.targetyear = year
-    registerMonths.totalmonth = months;
-    const {registerData} = await axios.put(`${API_URL}/total/${year}`, registerMonths, config);
+  if (needNewYearFlag) {
+    months.push(month)
+  }
+
+  months.push(month.toString())
+  registerMonths.id = year;
+  registerMonths.targetyear = year
+  registerMonths.totalmonth = months;
+  const {registerData} = await axios.put(`${API_URL}/total/${year}`, registerMonths, config);
 }
 
 const Save = {
