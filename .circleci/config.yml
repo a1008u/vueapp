@@ -7,14 +7,17 @@ jobs:
       - run: echo "hello world"
       - checkout
       - run:
-          name: Install dependencies
-          command: yarn install
-      - run:
           name: pwd
           command: pwd
       - run:
           name: ls -la
           command: ls -la
+      - run:
+          name: cd lunch
+          command: cd lunch
+      - run:
+          name: Install dependencies
+          command: yarn install
       - run:
           name: node api start
           command: yarn run start
