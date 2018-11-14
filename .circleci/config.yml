@@ -11,6 +11,6 @@ jobs:
           command: yarn install
           working_directory: /home/circleci/project/lunch/
       - run:
-          name: test exe
+          name: unit test exec
           command: yarn run test:unit
           working_directory: /home/circleci/project/lunch/
