@@ -21,9 +21,12 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install
+          working_directory: /home/circleci/project/lunch/
       - run:
           name: node api start
           command: yarn run start
+          working_directory: /home/circleci/project/lunch/
       - run:
           name: test exe
           command: yarn run test:unit
+          working_directory: /home/circleci/project/lunch/
