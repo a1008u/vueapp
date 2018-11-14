@@ -10,6 +10,10 @@ jobs:
           name: Install dependencies
           command: yarn install
       - run:
+          name: pwd
+          command: pwd
+          command: ls -la
+      - run:
           name: node api start
           command: yarn run start
       - run:
