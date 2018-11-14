@@ -14,7 +14,7 @@ jobs:
           command: ls -la
       - run:
           name: cd lunch
-          command: cd ./lunch
+          command: cd /home/circleci/project/lunch/
       - run:
           name: ls -la
           command: ls -la
