@@ -7,24 +7,8 @@ jobs:
       - run: echo "hello world"
       - checkout
       - run:
-          name: pwd
-          command: pwd
-      - run:
-          name: ls -la
-          command: ls -la
-      - run:
-          name: cd lunch
-          command: cd /home/circleci/project/lunch/
-      - run:
-          name: ls -la
-          command: ls -la
-      - run:
           name: Install dependencies
           command: yarn install
-          working_directory: /home/circleci/project/lunch/
-      - run:
-          name: node api start
-          command: yarn run start
           working_directory: /home/circleci/project/lunch/
       - run:
           name: test exe
