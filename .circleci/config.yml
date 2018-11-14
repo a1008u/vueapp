@@ -5,3 +5,13 @@ jobs:
       - image: circleci/node:8.11.3
     steps:
       - run: echo "hello world"
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: node api start
+          command: yarn run start
+      - run:
+          name: test exe
+          command: yarn run test:unit

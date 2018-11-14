@@ -9,26 +9,30 @@ export async function saveGroup(year, month, tempMembers, config){
 }
 
 export async function saveTotal(year, month, config){
-  const {data} = await axios.get(`${API_URL}/total`);
-  let registerMonths ={};
-  let months = [];
-  let needNewYearFlag = true;
-  data.forEach(target => {
-    if (target.totalmonth.length !== 12) {
-      target.totalmonth.forEach(month => months.push(month))
-      needNewYearFlag = false;
-    }
-  })
+  let months = await getExitTotal();
 
-  if (needNewYearFlag) {
-    months.push(month)
+  months.push(month.toString());
+
+  const { registerData } = await registerTotal();
+
+  async function registerTotal() {
+    let registerMonths = {};
+    registerMonths.id = year;
+    registerMonths.targetyear = year;
+    registerMonths.totalmonth = months;
+    return await axios.put(`${API_URL}/total/${year}`, registerMonths, config);
   }
 
-  months.push(month.toString())
-  registerMonths.id = year;
-  registerMonths.targetyear = year
-  registerMonths.totalmonth = months;
-  const {registerData} = await axios.put(`${API_URL}/total/${year}`, registerMonths, config);
+  async function getExitTotal() {
+    const { data } = await axios.get(`${API_URL}/total`);
+    let months = [];
+    data.forEach(target => {
+      if (target.totalmonth.length !== 12) {
+        target.totalmonth.forEach(month => months.push(month));
+      }
+    });
+    return months;
+  }
 }
 
 const Save = {

@@ -5,14 +5,14 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "npm-run-all -p start serve",
-    "pro": "npm-run-all -p start",
+    "pro": "npm-run-all -p start build",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "buid-storybook": "build-storybook -s public",
     "test:unit": "vue-cli-service test:unit",
-    "test-with-coverage": "npm run test:unit -- --coverage" 
+    "test:coverage": "npm run test:unit -- --coverage"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -49,6 +49,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "jest": "^23.6.0",
+    "jest-mock-axios": "^2.1.11",
     "npm-run-all": "^4.1.3",
     "vue-template-compiler": "^2.5.17"
   },
@@ -92,7 +93,10 @@
       "**/*.{js,vue}",
       "!**/node_modules/**"
     ],
-    "coverageReporters": ["html", "text-summary"],
+    "coverageReporters": [
+      "html",
+      "text-summary"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },

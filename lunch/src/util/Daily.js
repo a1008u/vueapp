@@ -22,7 +22,7 @@ export async function mkTargetYearMonth(targetYearMonths){
     let month = targetYearMonths[i].toString().slice(4,6);
     const {data} = await axios.get(`${API_URL}/${year}/${month}`);
     console.log(`${i}回目`)
-    console.table(data)
+    // console.table(data)
     yearMonth.push(data)
   }
   return yearMonth;
