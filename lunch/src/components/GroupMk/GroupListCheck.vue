@@ -20,7 +20,7 @@
       <br />
 
       <Cardedit :group='mkGroup' :modeFix='modeFix'
-                :out1='out1' :out2='out2' :out3='out3'></Cardedit>
+                :out1='out1' :out2='out2' :out3='out3' :out='out'></Cardedit>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ import Cardedit from '../Card/CardEdit';
 import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
 import Save from '../../util/Save.js';
 import Daily from '../../util/Daily.js';
+import Group from '../../util/Group.js';
 
 export default {
   name: 'grouplist',
@@ -41,6 +42,7 @@ export default {
     return {
       tempMembers:[],
       applicants:[],
+      out :[],
       out1 :[],
       out2 :[],
       out3 :[],
@@ -89,98 +91,32 @@ export default {
       }
 
     },
-    mkCkGroups(){
-      let ckGroups = [];
-      let ckMembers = [];
-      this.tempMembers.forEach(members => {
-        members.forEach(member => {
-          if (ckMembers.length === (this.selectedGroupNum -1)) {
-            ckMembers.push(member.name);
-            ckGroups.push(ckMembers);
-            ckMembers = [];
-          }
-          else {
-            ckMembers.push(member.name);
-          }
-        });
-      });
-      return ckGroups
-    },
-    mkDabuleCkGroupList(ckGroups, storeMembers){
-      let dabuleCkGroupList = [];
-      let dabuleCkGroup = [];
-      for (let members of ckGroups) {
-        for (let group of storeMembers.group) {
-          for (let member of group) {
-            if (members.includes(member.name)) {
-              group.forEach(tempMember => {
-                if (tempMember.name !== member.name) {
-                  dabuleCkGroup.push(tempMember.name);
-                }
-              });
-            }
-          }
-        }
-        dabuleCkGroupList.push(dabuleCkGroup);
-        dabuleCkGroup = [];
-      }
-      return dabuleCkGroupList
-    },
-    mkOutGroup(ckGroups, dabuleCkGroupList){
-      let outGroup = [];
-      let outMember = [];
-      ckGroups.forEach((members, index) => {
-        console.log(members);
-        console.log(dabuleCkGroupList[index]);
-        members.forEach(member => {
-          if (dabuleCkGroupList[index].includes(member)) {
-            outMember.push(member);
-          }
-        });
-        outGroup.push(outMember);
-        outMember = [];
-      });
-      return outGroup;
-    },
-    mkViewGroup(outGroup) {
-      let b = outGroup.length ;// 26
-      let cnt = 3;            // いくつずつに分割するか
-      let newArr = [];             // 新しく作る配列
-
-      for(let i = 0; i < Math.ceil(b / cnt); i++) {
-        let j = i * cnt;
-        let p = outGroup.slice(j, j + cnt); // i*cnt 番目から i*cnt+cnt 番目まで取得
-        newArr.push(p);                    // 取得したものを newArr に追加
-      }
-      return newArr
-    },
     async ck(){
       console.log(' -------- ')
       // mainロジック --------------------------------------
       this.modeFix = false;
 
       // 検索対象変形
-      const ckGroups = this.mkCkGroups();
+      const ckGroups = Group.mkCkGroups(this.tempMembers, this.selectedGroupNum);
 
       // チェック対処を取得
       const targetYearMonths = await Daily.mkTargetYearMonths();
       let yearMonth = await Daily.mkTargetYearMonth(targetYearMonths)
 
       // チェック
-      const dabuleCkGroupList1 = this.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
-      const dabuleCkGroupList2 = this.mkDabuleCkGroupList(ckGroups, yearMonth[1]);
-      const dabuleCkGroupList3 = this.mkDabuleCkGroupList(ckGroups, yearMonth[2]);
-
+      const dabuleCkGroupList1 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
+      const dabuleCkGroupList2 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[1]);
+      const dabuleCkGroupList3 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[2]);
 
       // 該当箇所を抽出
-      const outGroup1 = this.mkOutGroup(ckGroups, dabuleCkGroupList1);
-      const outGroup2 = this.mkOutGroup(ckGroups, dabuleCkGroupList2);
-      const outGroup3 = this.mkOutGroup(ckGroups, dabuleCkGroupList3);
+      const outGroup1 = Group.mkOutGroup(ckGroups, dabuleCkGroupList1);
+      const outGroup2 = Group.mkOutGroup(ckGroups, dabuleCkGroupList2);
+      const outGroup3 = Group.mkOutGroup(ckGroups, dabuleCkGroupList3);
 
       // TODO methodへ
-      this.out1 = this.mkViewGroup(outGroup1);
-      this.out2 = this.mkViewGroup(outGroup2);
-      this.out3 = this.mkViewGroup(outGroup3);
+      this.out1 = Group.mkViewGroup(outGroup1);
+      this.out2 = Group.mkViewGroup(outGroup2);
+      this.out3 = Group.mkViewGroup(outGroup3);
       console.log('------------------');
       console.log(this.out1);
       console.log(this.out2);

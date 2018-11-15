@@ -6,14 +6,23 @@
 
     <br />
 
-    <RegisterButtonSet :buttonState='buttonState'
+    <!-- <RegisterButtonSet :buttonState='buttonState'
         @save='save' @confirm='confirm'
         @fix='fix' @ck='ck'></RegisterButtonSet>
 
     <br />
 
     <Cardedit :group='group' :modeFix='modeFix'
-              :out1='out1' :out2='out2' :out3='out3'></Cardedit>
+              :out1='out1' :out2='out2' :out3='out3'></Cardedit> -->
+
+      <RegisterButtonSet :buttonState='buttonState' :viewContents='viewContents' :registerState='registerState'
+                  @save='save' @confirm='confirm'
+                  @fix='fix' @ck='ck'></RegisterButtonSet>
+
+      <br />
+
+      <Cardedit :group='group' :modeFix='modeFix'
+              :out1='out1' :out2='out2' :out3='out3' :out='out'></Cardedit>
 
   </div>
 </template>
@@ -26,6 +35,9 @@ import { API_URL } from '../../constants';
 import Card from '../Card/Card';
 import Cardedit from '../Card/CardEdit';
 import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
+import Save from '../../util/Save.js';
+import Daily from '../../util/Daily.js';
+import Group from '../../util/Group.js';
 
 export default {
   name: 'backnumber',
@@ -34,11 +46,17 @@ export default {
     return {
       tempMembers:[],
       group:[],
+      out :[],
       out1 :[],
       out2 :[],
       out3 :[],
       modeFix :false,
       buttonState: false,
+      applicants:[],
+      group :[],
+      viewContents:false,
+      registerState:false,
+      config : {headers: {'Content-Type': 'application/json'}}
     }
   },
   async mounted() {
@@ -67,6 +85,91 @@ export default {
     RegisterButtonSet:RegisterButtonSet,
   },
   methods:{
+    fix(){
+      this.modeFix = !this.modeFix;
+    },
+    confirm(){
+      this.buttonState = !this.buttonState;
+      this.modeFix = false;
+    },
+    async save(){
+      this.viewContents = !this.viewContents;
+      const dt = new Date();
+      const year = dt.getFullYear();
+      const month = dt.getMonth()+1;
+      let targetYearMonth = `${year}${month}`;
+
+      // 保存処理実施確認
+      const targetYearMonths = await Daily.mkTargetYearMonths();
+      if(!targetYearMonths.includes(Number(targetYearMonth))) {
+
+        // totalの登録 -------------------------------
+        // this.saveTotal(year, month);
+        Save.saveTotal(year, month, this.config)
+
+        // groupの登録 -------------------------------
+        // this.saveGroup(year, month, this.tempMembers);
+        Save.saveGroup(year, month, this.tempMembers, this.config);
+
+        // 状態変更 -------------------------------
+        this.registerState = !this.registerState;
+      }
+
+    },
+    async ck(){
+      console.log(' -------- ')
+      this.out = [];
+
+      // mainロジック --------------------------------------
+      this.modeFix = false;
+
+      // 検索対象変形
+      const ckGroups = Group.mkCkGroup(this.group);
+
+      // チェック対処を取得
+      const targetYear = this.$route.params.yearmonth.slice(0,4);
+      const targetmonth = this.$route.params.yearmonth.slice(5,7);
+      const targetYearMonth = `${targetYear}${targetmonth}`;
+
+      const targetYearMonths = await Daily.mkTargetYearMonths();
+      let index = targetYearMonths.indexOf(Number(targetYearMonth));
+      const target = targetYearMonths.slice(index + 1, index + 4);
+      const yearMonth = await Daily.mkTargetYearMonthBk(target)
+
+      let registerOut = (i) => {
+        const dabuleCkGroupList = Group.mkDabuleCkGroupList(ckGroups, yearMonth[i]);
+        const outGroup = Group.mkOutGroup(ckGroups, dabuleCkGroupList);
+        this.out.push(Group.mkViewGroup(outGroup));
+      }
+
+      if(yearMonth.length > 0) {
+        registerOut(0);
+        const dabuleCkGroupList1 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
+        const outGroup1 = Group.mkOutGroup(ckGroups, dabuleCkGroupList1);
+        this.out1 = Group.mkViewGroup(outGroup1);
+        console.log(this.out1);
+      }
+
+      if(yearMonth.length > 1) {
+        registerOut(1);
+        const dabuleCkGroupList2 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[1]);
+        const outGroup2 = Group.mkOutGroup(ckGroups, dabuleCkGroupList2);
+        this.out2 = Group.mkViewGroup(outGroup2);
+        console.log(this.out2);
+      }
+
+      if(yearMonth.length > 2) {
+        registerOut(2);
+        const dabuleCkGroupList3 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[2]);
+        const outGroup3 = Group.mkOutGroup(ckGroups, dabuleCkGroupList3);
+        this.out3 = Group.mkViewGroup(outGroup3);
+        console.log(this.out3);
+      }
+
+      console.log(this.out)
+
+
+    }
   },
   computed:{
   },

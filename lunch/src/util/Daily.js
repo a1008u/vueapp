@@ -21,8 +21,17 @@ export async function mkTargetYearMonth(targetYearMonths){
     let year = targetYearMonths[i].toString().slice(0,4);
     let month = targetYearMonths[i].toString().slice(4,6);
     const {data} = await axios.get(`${API_URL}/${year}/${month}`);
-    console.log(`${i}回目`)
-    // console.table(data)
+    yearMonth.push(data)
+  }
+  return yearMonth;
+}
+
+export async function mkTargetYearMonthBk(targetYearMonths){
+  let yearMonth = [];
+  for (let targetYearMonth of targetYearMonths) {
+    let year = targetYearMonth.toString().slice(0,4);
+    let month = targetYearMonth.toString().slice(4,6);
+    const {data} = await axios.get(`${API_URL}/${year}/${month}`);
     yearMonth.push(data)
   }
   return yearMonth;
@@ -30,6 +39,7 @@ export async function mkTargetYearMonth(targetYearMonths){
 
 const Daily = {
   mkTargetYearMonths,
-  mkTargetYearMonth
+  mkTargetYearMonth,
+  mkTargetYearMonthBk
 };
 export default Daily;

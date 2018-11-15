@@ -58,6 +58,9 @@
                 </div>
               </div>
 
+              <div class="card-content" v-if="out.length !== 0">
+              </div>
+
           </div>
         </div>
       </div>
@@ -70,7 +73,7 @@
 
 export default {
   name: 'cardedit',
-  props:['group', 'modeFix','out1','out2','out3'],
+  props:['group', 'modeFix','out1','out2','out3','out'],
   data(){
     return {
     }
