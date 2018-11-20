@@ -40,8 +40,6 @@ const mkOutGroup = (ckGroups, dabuleCkGroupList) => {
   let outGroup = [];
   let outMember = [];
   ckGroups.forEach((members, index) => {
-    console.log(members);
-    console.log(dabuleCkGroupList[index]);
     members.forEach(member => {
       if (dabuleCkGroupList[index].includes(member)) {
         outMember.push(member);

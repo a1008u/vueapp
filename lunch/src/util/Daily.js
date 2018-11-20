@@ -11,7 +11,6 @@ export async function mkTargetYearMonths() {
     })
   })
   targetYearMonths.sort((a,b) => (a < b ? 1 : -1));
-  console.log(`targetYearMonth ${targetYearMonths}`)
   return targetYearMonths;
 }
 
