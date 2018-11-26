@@ -2,12 +2,14 @@
   <div id="app">
     <Navbar />
 
+    <router-view />
+
     <AllFriends :friends="friends" @delete="deleteFriend" />
     <OnlineFriends :friends="friends"/>
 
     <Blogs />
 
-    <router-view />
+    
   </div>
 </template>
 
