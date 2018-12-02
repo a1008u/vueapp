@@ -10,64 +10,70 @@
           </li>
         </ul>
       </div>
+      <span class="btn-floating btn-large halfway-fab pink">
+        <router-link :to="{ name: 'EditSmoothie', params: {smoothie_slug: smoothie.slug} }">
+          <i class="material-icons edit">edit</i>
+        </router-link>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
-import db from '@/firebase/init'
+import db from "@/firebase/init";
 export default {
-  name: 'Index',
-  data(){
-    return{
+  name: "Index",
+  data() {
+    return {
       smoothies: []
-    }
+    };
   },
   methods: {
-    deleteSmoothie(id){
+    deleteSmoothie(id) {
       // delete doc from firestore
-      console.log(id)
-      db.collection('smoothies')
+      console.log(id);
+      db.collection("smoothies")
         .doc(id)
         .delete()
-        .then(() => this.smoothies = this.smoothies.filter(smoothie => smoothie.id != id))
-        .catch(err => console.log(err))
+        .then( () => (this.smoothies = this.smoothies.filter(smoothie => smoothie.id != id)))
+        .catch(err => console.log(err));
     }
   },
-  created(){
+  created() {
     // fetch data from firestore
-    db.collection('smoothies').get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        console.log(doc.data())
-        let smoothie = doc.data()
-        smoothie.id = doc.id
-        this.smoothies.push(smoothie)
-      })
-    })
+    db.collection("smoothies")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.data());
+          let smoothie = doc.data();
+          smoothie.id = doc.id;
+          this.smoothies.push(smoothie);
+        });
+      });
   }
-}
+};
 </script>
 
 <style>
-.index{
+.index {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 30px;
   margin-top: 60px;
 }
-.index h2{
+.index h2 {
   font-size: 1.8em;
   text-align: center;
   margin-top: 0;
 }
-.index .ingredients{
+.index .ingredients {
   margin: 30px auto;
 }
-.index .ingredients li{
+.index .ingredients li {
   display: inline-block;
 }
-.index .delete{
+.index .delete {
   position: absolute;
   top: 4px;
   right: 4px;

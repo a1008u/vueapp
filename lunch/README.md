@@ -58,5 +58,11 @@ docker run --rm \
     docker/compose:1.22.0 up --build
 ```
 
-// babelの対策
+// babel7の対策
 https://qiita.com/oreo3@github/items/b383c57949e0f117cbea
+
+```
+npm uninstall --save-dev babel-core babel-preset-env babel-loader webpack @babel/polyfill
+npm install --save-dev @babel/core @babel/preset-env babel-loader webpack
+npm audit fix
+```
