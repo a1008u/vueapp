@@ -40,13 +40,11 @@ export default {
     editSmoothie(){
       if(this.smoothie.title){
         this.feedback = null
-        // create a slug
         this.slug = slugify(this.smoothie.title, {
           replacement: '-',
           remove: /[$*_+~.()'"!\-:@]/g,
           lower: true
         })
-        // update smoothie in firestore
         db.collection('smoothies')
           .doc(this.smoothie.id)
           .update({
@@ -70,9 +68,7 @@ export default {
       }
     },
     deleteIng(ing){
-      this.smoothie.ingredients = this.smoothie.ingredients.filter(ingredient => {
-        return ingredient != ing
-      })
+      this.smoothie.ingredients = this.smoothie.ingredients.filter(ingredient => ingredient != ing)
     }
   },
   created(){

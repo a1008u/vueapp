@@ -30,8 +30,6 @@ export default {
   },
   methods: {
     deleteSmoothie(id) {
-      // delete doc from firestore
-      console.log(id);
       db.collection("smoothies")
         .doc(id)
         .delete()
@@ -40,7 +38,6 @@ export default {
     }
   },
   created() {
-    // fetch data from firestore
     db.collection("smoothies")
       .get()
       .then(snapshot => {

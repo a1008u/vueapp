@@ -23,13 +23,15 @@ export default {
   methods:{
     addMessage(){
       if(this.newMesssage) {
-        db.collection('messages').add({
-          content: this.newMesssage,
-          name: this.name,
-          timestamp: Date.now()
-        }).catch(err => console.log(err))
-        this.newMesssage = null
-        this.feedback = null
+        db.collection('messages')
+          .add({
+            content: this.newMesssage,
+            name: this.name,
+            timestamp: Date.now()})
+          .then(() => {
+            this.newMesssage = null
+            this.feedback = null})
+          .catch(err => console.log(err))
       } else {
         this.feedback = 'you must enter a message in order to send one'
       }
