@@ -3,7 +3,7 @@
     <h2 class="center teal-text">Chat {{ this.name }}</h2>
     <div class="card">
       <div class="card-content">
-        <Cart />
+        <ChatArea />
       </div>
       <div class="card-action">
         <NewMessage :name="name"/>
@@ -13,11 +13,14 @@
 </template>
 
 <script>
+import ChatArea from "@/components/ChatArea"
+import NewMessage from "@/components/NewMessage"
 
 export default {
   name:'Main',
   props:['name'],
   components:{
+    ChatArea,
     NewMessage
   },
   data(){

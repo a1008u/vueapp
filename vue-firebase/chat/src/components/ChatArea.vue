@@ -1,21 +1,11 @@
 <template>
-  <div class="chat container">
-    <h2 class="center teal-text">Chat {{ this.name }}</h2>
-    <div class="card">
-      <div class="card-content">
-        <ul class="messages" v-chat-scroll>
-          <li v-for="message in messages" :key="message.id">
-            <span class="teal-text">{{ message.name }}</span>
-            <span class="grey-text text-darken-3">{{ message.content }}</span>
-            <span class="grey-text time">{{ message.timestamp }}</span>
-          </li>
-        </ul>
-      </div>
-      <div class="card-action">
-        <NewMessage :name="name"/>
-      </div>
-    </div>
-  </div>
+  <ul class="messages" v-chat-scroll>
+    <li v-for="message in messages" :key="message.id">
+      <span class="teal-text">{{ message.name }}</span>
+      <span class="grey-text text-darken-3"> {{ message.content }}</span>
+      <span class="grey-text time">{{ message.timestamp }}</span>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -24,11 +14,7 @@ import db from "@/firebase/init"
 import moment from "moment"
 
 export default {
-  name:'Chat',
-  props:['name'],
-  components:{
-    NewMessage
-  },
+  name:'ChatArea',
   data(){
     return{
       messages:[]

@@ -13,10 +13,23 @@ export default new Router({
       name: "home",
       component: Home
     },
+    // {
+    //   path: "/chat",
+    //   name: "Chat",
+    //   component: () => import("./components/Chat"),
+    //   props: true,
+    //   beforeEnter: (to, from, next) => {
+    //     if(to.params.name) {
+    //       next();
+    //     } else {
+    //       next({ name: 'home' });
+    //     }
+    //   }
+    // }
     {
-      path: "/chat",
-      name: "Chat",
-      component: () => import("./components/Chat"),
+      path: "/main",
+      name: "Main",
+      component: () => import("./views/Main.vue"),
       props: true,
       beforeEnter: (to, from, next) => {
         if(to.params.name) {
