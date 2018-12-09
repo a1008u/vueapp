@@ -6,20 +6,18 @@
 
     <br />
 
-      <div v-if='registerState'>
-         更新完了<br />
-      </div>
-      <div v-else>
-        <RegisterButtonSet :buttonState='buttonState' :viewContents='viewContents'
-                  @save='save' @confirm='confirm' @fix='fix' @ck='ck'></RegisterButtonSet>
-      </div>
+    <div v-if='registerState'>
+      更新完了<br />
+    </div>
+    <div v-else>
+      <RegisterButtonSet :buttonState='buttonState' :viewContents='viewContents'
+                @save='save' @confirm='confirm' @fix='fix' @ck='ck'></RegisterButtonSet>
+    </div>
 
-      
+    <br />
 
-      <br />
-
-      <Cardedit :group='group' :modeFix='modeFix'
-              :out1='out1' :out2='out2' :out3='out3' :out='out'></Cardedit>
+    <Cardedit :group='group' :modeFix='modeFix'
+            :out1='out1' :out2='out2' :out3='out3' :out='out'></Cardedit>
 
   </div>
 </template>

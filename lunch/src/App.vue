@@ -1,9 +1,6 @@
 <template>
   <div id="app">
     <navbar />
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-
-    <!-- <router-view></router-view> -->
 
     <section class="section">
       <div class="container">

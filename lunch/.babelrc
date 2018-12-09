@@ -3,5 +3,6 @@
     "test": {
       "presets": ["env"]
     }
-  }
+  },
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }

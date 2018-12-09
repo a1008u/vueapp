@@ -7,18 +7,18 @@
 
     <br>
 
-    <div v-if="useCk1">
+    <div v-if="groupListCheck">
       <GroupListCheck
         :csvText='csvText'
         :selectedTotalGroupNum='selectedTotalGroupNum'
         :selectedGroupNum='selectedGroupNum'>
       </GroupListCheck>
     </div>
-    <div v-else-if="useCk2">
+    <div v-else-if="groupList">
       <GroupList></GroupList>
     </div>
     <div v-else>
-
+      <!-- csvをdropさせるコンポーネント -->
       <Drop @set-csvtext='setCsvText'/><br>
 
       <div class="box">
@@ -65,7 +65,7 @@
             <button @click="groupListMk" class="button is-info is-rounded">GroupListCheck button</button>
           </div>
           <div class="column is-half">
-            <button @click="useCk2 = !useCk2" class="button is-info is-rounded">GroupList button</button>
+            <button @click="groupList = !groupList" class="button is-info is-rounded">GroupList button</button>
           </div>
         </div>
       </div>
@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import GroupList from './GroupList.vue';
-import GroupListCheck from './GroupListCheck.vue';
-import Drop from './Drop.vue';
+import GroupList from '../components/GroupMk/GroupList.vue';
+import GroupListCheck from '../components/GroupMk/GroupListCheck.vue';
+import Drop from '../components/GroupMk/Drop.vue';
 
 export default {
   name: 'groupmk',
@@ -100,8 +100,8 @@ export default {
         { text: 'eleven', value: 11 },
         { text: 'twelve', value: 12 },
       ],
-      useCk1 :false,
-      useCk2 :false,
+      groupListCheck :false,
+      groupList :false,
       csvText:[],
     }
   },
@@ -112,11 +112,11 @@ export default {
   },
   methods:{
     groupListMk(){
-      if(this.useCk1) {
-        this.useCk1 = false;
+      if(this.groupListCheck) {
+        this.groupListCheck = false;
       } else {
         if(this.selectedTotalGroupNum !==0 && this.selectedGroupNum !==0) {
-          this.useCk1 = true;
+          this.groupListCheck = true;
         }
       }
     },
