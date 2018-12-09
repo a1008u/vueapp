@@ -4,8 +4,8 @@
       <div class="container">
         <router-link :to="{ name: 'home' }" class="brand-logo left">Geo</router-link>
         <ul class="right">
-          <li v-if="!user"><router-link :to="{ name: 'Signup' }">Signup</router-link></li>
-          <li v-if="!user"><router-link :to="{ name: 'Login' }">Login</router-link></li>
+          <li v-if="!user"><router-link :to="{ name: 'Auth' , params: { target: 'Signup' } }">Signup</router-link></li>
+          <li v-if="!user"><router-link :to="{ name: 'Auth' , params: { target: 'Login' } }">Login</router-link></li>
           <li v-if="user"><a>{{ user.email }}</a></li>
           <li v-if="user"><a @click="logout">Logout</a></li>
         </ul>
@@ -26,7 +26,7 @@ export default {
   methods: {
     logout(){
       firebase.auth().signOut()
-        .then(() => this.$router.push({ name: 'Login' }))
+        .then(() => this.$router.push({ name: 'Auth' }))
     }
   },
   created() {

@@ -1,8 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import Signup from "./components/auth/Signup.vue";
-import Login from "./components/auth/Login.vue";
 import firebase from "firebase";
 import ViewProfile from "@/components/profile/ViewProfile.vue";
 
@@ -13,27 +10,17 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/signup",
-      name: "Signup",
-      component: Signup
+      path: "/auth/:target",
+      name: "Auth",
+      component: () => import("./views/Auth.vue")
     },
     {
       path: "/",
       name: "home",
-      component: Home,
+      component: () => import("./views/Home.vue"),
       meta: {
         requiresAuth: true
       }
-    },
-    {
-      path: "/login",
-      name: "Login",
-      component: Login
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () => import("./views/About.vue")
     },
     {
       path: "/profile/:id",
@@ -57,9 +44,7 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       // No user is signed in. Redirect to login
-      next({
-        name: "Login"
-      });
+      next({ path: "/auth/Login" });
     }
   } else {
     // if route is not guarded by auth, proceed
