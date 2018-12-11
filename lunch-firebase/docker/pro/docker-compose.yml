@@ -1,0 +1,24 @@
+version: '2'
+services:
+
+  lunch_back:
+    build:
+      context: ../../
+      dockerfile: ./docker/pro/back/Dockerfile
+    image: lunch_back
+    working_dir: /appback
+    ports:
+      - "3000:3000"
+    command: ash -c
+        'npm run pro'
+
+  lunch_front:
+    build:
+      context: ../../
+      dockerfile: ./docker/pro/front/Dockerfile
+    image: lunch_front
+    working_dir: /appfront
+    ports:
+      - "8080:80"
+
+  
