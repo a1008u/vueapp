@@ -29,6 +29,7 @@ export default {
       return db.collection(collectionName).doc(docName)
         .get()
         .then(snapshot => snapshot)
+        .catch(err => err)
     }
 
     let testName = await getName("test", "part1");

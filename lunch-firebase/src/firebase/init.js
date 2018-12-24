@@ -1,7 +1,9 @@
+/**
+ * firebase init
+ */
 import firebase from "firebase";
-import firestore from "firebase/firestore";
 
-var config = {
+let config = {
   apiKey: "AIzaSyD8ZnE1HW04Fc_uY03qe4umw7R6xmpl2nI",
   authDomain: "lunch-5cec1.firebaseapp.com",
   databaseURL: "https://lunch-5cec1.firebaseio.com",
@@ -12,5 +14,4 @@ var config = {
 const firebaseApp = firebase.initializeApp(config);
 firebaseApp.firestore().settings({ timestampsInSnapshots: true });
 
-// export firestore database
 export default firebaseApp.firestore();
