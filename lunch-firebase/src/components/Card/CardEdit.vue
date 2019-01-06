@@ -29,36 +29,39 @@
 
             <!-- <footer class="card-footer"></footer> -->
 
-              <div class="card-content" v-if="out1.length !== 0 && out2.length !== 0 && out3.length !== 0 ">
+              <div class="card-content" v-if="out1.length !== 0 || out2.length !== 0 || out3.length !== 0 ">
                 <div class="content">
-                  <div v-if="out1[groupindex][index].length !== 0" class="notification is-danger">
-                    <span class="tag is-black is-medium">１ヶ月前</span>
-                    <div class="columns is-mobile is-centered">
-                      <div class="column is-2 " v-for="(value1, index1) in out1[groupindex][index]" :key='index1'>
-                        {{value1}}
-                      </div>
+                  <article v-if="out1.length !== 0 && out1[groupindex][index].length !== 0" class="message is-danger">
+                    <div class="message-header">
+                      <p>１ヶ月前</p>
                     </div>
-                  </div>
-                  <div v-if="out2[groupindex][index].length !== 0" class="notification is-danger">
-                    <span class="tag is-black is-medium">２ヶ月前</span>
-                    <div class="columns is-mobile is-centered" >
-                      <div class="column is-2" v-for="(value2, index2) in out2[groupindex][index]" :key='index2'>
-                        {{value2}}
-                      </div>
+                    <div class="message-body">
+                      <p v-for="(value1, index1) in out1[groupindex][index]" :key='index1'>
+                      {{value1}}
+                      </p>
                     </div>
-                  </div>
-                  <div v-if="out3[groupindex][index].length !== 0" class="notification is-danger">
-                    <span class="tag is-black is-medium">３ヶ月前</span>
-                    <div class="columns is-mobile is-centered">
-                      <div class="column is-2" v-for="(value3, index3) in out3[groupindex][index]" :key='index3'>
-                        {{value3}}
-                      </div>
+                  </article>
+                  <article v-if="out2.length !== 0 && out2[groupindex][index].length !== 0" class="message is-danger">
+                    <div class="message-header">
+                      <p>2ヶ月前</p>
                     </div>
-                  </div>
+                    <div class="message-body">
+                      <p v-for="(value2, index2) in out2[groupindex][index]" :key='index2'>
+                      {{value2}}
+                      </p>
+                    </div>
+                  </article>
+                  <article v-if="out3.length !== 0 && out3[groupindex][index].length !== 0" class="message is-danger">
+                    <div class="message-header">
+                      <p>3ヶ月前</p>
+                    </div>
+                    <div class="message-body">
+                      <p v-for="(value3, index3) in out3[groupindex][index]" :key='index3'>
+                      {{value3}}
+                      </p>
+                    </div>
+                  </article>
                 </div>
-              </div>
-
-              <div class="card-content" v-if="out.length !== 0">
               </div>
 
           </div>
@@ -73,7 +76,7 @@
 
 export default {
   name: 'cardedit',
-  props:['group', 'modeFix','out1','out2','out3','out'],
+  props:['group', 'modeFix','out1','out2','out3'],
   data(){
     return {
     }

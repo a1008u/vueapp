@@ -66,3 +66,14 @@ npm uninstall --save-dev babel-core babel-preset-env babel-loader webpack @babel
 npm install --save-dev @babel/core @babel/preset-env babel-loader webpack
 npm audit fix
 ```
+
+# firebase hosting
+```
+firebase init
+firebase deploy
+```
+
+# firebase functionsのデプロイ
+```
+firebase deploy --only functions
+```

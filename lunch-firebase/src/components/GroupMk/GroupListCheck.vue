@@ -2,14 +2,8 @@
   <div id="groupList">
 
     <div v-if="viewContents">
-      <div v-if="registerState">
-        登録完了<br />
-        <router-link class="navbar-brand" to="/">Home</router-link>
-      </div>
-      <div v-else>
-        すでに登録されています<br />
-        <router-link class="navbar-brand" to="/">Home</router-link>
-      </div>
+      <div>{{resultRegister}}</div>
+      <router-link class="navbar-brand" to="/">Home</router-link>
     </div>
     <div v-else>
 
@@ -20,7 +14,7 @@
       <br />
 
       <Cardedit :group='mkGroup' :modeFix='modeFix'
-                :out1='out1' :out2='out2' :out3='out3' :out='out'></Cardedit>
+                :out1='out1' :out2='out2' :out3='out3'></Cardedit>
     </div>
   </div>
 </template>
@@ -35,6 +29,7 @@ import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
 import Save from '../../util/Save.js';
 import Daily from '../../util/Daily.js';
 import Group from '../../util/Group.js';
+import Firestore from "../../util/Firestore";
 
 export default {
   name: 'grouplist',
@@ -42,7 +37,6 @@ export default {
     return {
       tempMembers:[],
       applicants:[],
-      out :[],
       out1 :[],
       out2 :[],
       out3 :[],
@@ -51,10 +45,11 @@ export default {
       buttonState:false,
       viewContents:false,
       registerState:false,
+      resultRegister: '登録中',
       config : {headers: {'Content-Type': 'application/json'}}
     }
   },
-  props:['selectedTotalGroupNum','selectedGroupNum','csvText'],
+  props:['selectedTotalGroupNum','selectedGroupNum','csvText','selectedYear','selectedMonth'],
   components:{
     Cardedit:Cardedit,
     RegisterButtonSet:RegisterButtonSet,
@@ -69,25 +64,32 @@ export default {
     },
     async save(){
       this.viewContents = !this.viewContents;
-      const dt = new Date();
-      const year = dt.getFullYear();
-      const month = dt.getMonth()+1;
-      let targetYearMonth = `${year}${month}`;
 
       // 保存処理実施確認
-      const targetYearMonths = await Daily.mkTargetYearMonths();
-      if(!targetYearMonths.includes(Number(targetYearMonth))) {
+      const targetYearMonths = await Daily.mkTargetYearMonthsViaFirastore();
+      const targetYearMonth = `${this.selectedYear}${this.selectedMonth}`;
+      if(!targetYearMonths.includes(targetYearMonth)) {
 
-        // totalの登録 -------------------------------
-        // this.saveTotal(year, month);
-        Save.saveTotal(year, month, this.config)
+        console.log('year : ', this.selectedYear)
+        console.log('month : ', this.selectedMonth)
 
-        // groupの登録 -------------------------------
-        // this.saveGroup(year, month, this.tempMembers);
-        Save.saveGroup(year, month, this.tempMembers, this.config);
+        const result = await Save.exe(this.selectedYear, this.selectedMonth, this.tempMembers)
+        console.log(result)
 
         // 状態変更 -------------------------------
         this.registerState = !this.registerState;
+
+        if(this.registerState) {
+          this.resultRegister = '登録しました。'
+        } else {
+          this.resultRegister = 'すでに登録されています。'
+        }
+
+        console.log(this.resultRegister)
+
+      } else {
+        this.resultRegister = 'すでに登録されています。'
+        console.log(this.resultRegister)
       }
 
     },
@@ -100,27 +102,25 @@ export default {
       const ckGroups = Group.mkCkGroups(this.tempMembers, this.selectedGroupNum);
 
       // チェック対処を取得
-      const targetYearMonths = await Daily.mkTargetYearMonths();
-      let yearMonth = await Daily.mkTargetYearMonth(targetYearMonths)
+      const targetYearMonths = await Daily.mkTargetYearMonthsViaFirastore()
+      targetYearMonths.push(`${this.selectedYear}${this.selectedMonth}`);
+      targetYearMonths.sort((a, b) => (a < b ? 1 : -1));
+      const index = targetYearMonths.indexOf(`${this.selectedYear}${this.selectedMonth}`);
+      const targets = targetYearMonths.slice(index + 1, index + 4);
+      const yearMonths = await Daily.mkNewTargetYearMonthViaFirastore(targets)
 
-      // チェック
-      const dabuleCkGroupList1 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[0]);
-      const dabuleCkGroupList2 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[1]);
-      const dabuleCkGroupList3 = Group.mkDabuleCkGroupList(ckGroups, yearMonth[2]);
+      console.log('targets : ', targets)
 
-      // 該当箇所を抽出
-      const outGroup1 = Group.mkOutGroup(ckGroups, dabuleCkGroupList1);
-      const outGroup2 = Group.mkOutGroup(ckGroups, dabuleCkGroupList2);
-      const outGroup3 = Group.mkOutGroup(ckGroups, dabuleCkGroupList3);
+      // 重複箇所の取得
+      this.out1 = (yearMonths.length > 0) ? Group.registerOut(0, yearMonths, ckGroups) : [];
+      this.out2 = (yearMonths.length > 1) ? Group.registerOut(1, yearMonths, ckGroups) : [];
+      this.out3 = (yearMonths.length > 2) ? Group.registerOut(2, yearMonths, ckGroups) : [];
 
-      // TODO methodへ
-      this.out1 = Group.mkViewGroup(outGroup1);
-      this.out2 = Group.mkViewGroup(outGroup2);
-      this.out3 = Group.mkViewGroup(outGroup3);
+
       console.log('------------------');
-      console.log(this.out1);
-      console.log(this.out2);
-      console.log(this.out3);
+      console.log('out1 : ', this.out1)
+      console.log('out2 : ', this.out2)
+      console.log('out3 : ', this.out3)
     }
   },
   computed:{
@@ -159,7 +159,6 @@ export default {
       console.log(newArr)
 
       this.groups = newArr;
-      // return newMembers;
       return this.groups
 	  }
   },

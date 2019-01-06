@@ -1,42 +1,88 @@
-import axios from 'axios';
-import { API_URL } from '../constants';
+import db from "@/firebase/init";
+import Firestore from './Firestore';
 
-export async function saveGroup(year, month, tempMembers, config){
-  let registerGroup = {};
-  registerGroup.id = month.toString();
-  registerGroup.group = tempMembers
-  const {registerDatas} = await axios.post(`${API_URL}/${year}`, registerGroup, config);
+/**
+ * 処理
+ *  - totalの登録
+ *  - groupの登録(totalが成功した場合のみ実施)
+ *  * batchを利用して一括保存
+ *
+ * @param {*} year : 入力した年
+ * @param {*} month : 入力した月
+ * @param {*} tempMembers : 登録用のグループ
+ */
+export async function exe(year, month, tempMembers) {
+  const batch = db.batch();
+
+  // totalの登録 -------------------------------
+  const resultTotal = await Save.saveTotalFirestore(batch, year, month)
+
+  // -------------------------------
+  const resultGroup = (resultTotal) ? await Firestore.setFirestoreToTotal(batch, year, month, tempMembers) : false;
+
+  console.log('resultTotal : ', resultTotal)
+  console.log('resultGroup : ', resultGroup)
+
+  return batch
+    .commit()
+    .then(() => true)
+    .catch(err => err);
 }
 
-export async function saveTotal(year, month, config){
-  let months = await getExitTotal();
-
-  months.push(month.toString());
-
-  const { registerData } = await registerTotal();
-
-  async function registerTotal() {
-    let registerMonths = {};
-    registerMonths.id = year;
-    registerMonths.targetyear = year;
-    registerMonths.totalmonth = months;
-    return await axios.put(`${API_URL}/total/${year}`, registerMonths, config);
+/**
+ * TODO:FireStoreに何も無い時の処理がバグっている（考慮していない）
+ * @param {*} batch 
+ * @param {*} year 
+ * @param {*} month 
+ */
+export async function saveTotalFirestore(batch, year, month){
+  let [yearmonths, groupTotalTargets] = await getExitTotal();
+  if (yearmonths.includes(`${year}${month}`)) {
+    return false;
+  } else {
+    yearmonths.push(`${year}${month}`);
+    return await registerTotal(batch, year, month, groupTotalTargets);
   }
 
-  async function getExitTotal() {
-    const { data } = await axios.get(`${API_URL}/total`);
-    let months = [];
-    data.forEach(target => {
-      if (target.totalmonth.length !== 12) {
-        target.totalmonth.forEach(month => months.push(month));
+  async function registerTotal(batch, year, month, groupTotalTargets) {
+    for (let totalTarget of groupTotalTargets) {
+      // update
+      if (totalTarget.targetyear === year) {
+        totalTarget.totalmonth.push(month)
+        totalTarget.totalmonth.sort((a, b) => (a > b ? 1 : -1));
+        return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
+      } else {
+        // 新規（insert）
+        if(totalTarget.targetyear !== year && totalTarget.targetyear+1 === year) {
+          const newTarget = {}
+          newTarget.targetyear = year
+          newTarget.totalmonth = [month]
+          groupTotalTargets.push(newTarget)
+          console.log('groupTotalTarget 2 : ', groupTotalTarget)
+          return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
+        }
       }
+    }
+  }
+
+  /**
+   * @returns
+   *  yearmonths : Firebaseにすでに登録されている年月の配列（['201701','201702']）
+   *  groupTotalTargets : Firebaseの取得データ（更新や追加用）
+   */
+  async function getExitTotal() {
+    const groupTotal = await Firestore.getFireStore("group", "total");
+    const groupTotalTargets = groupTotal.data()['target'];
+    let yearmonths = [];
+    groupTotalTargets.forEach(target => {
+      target.totalmonth.forEach(month => yearmonths.push(`${target.targetyear}${month}`));
     });
-    return months;
+    return [yearmonths, groupTotalTargets];
   }
 }
 
 const Save = {
-  saveTotal,
-  saveGroup
+  exe,
+  saveTotalFirestore,
 };
 export default Save;

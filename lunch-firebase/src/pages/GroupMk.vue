@@ -11,7 +11,13 @@
       <GroupListCheck
         :csvText='csvText'
         :selectedTotalGroupNum='selectedTotalGroupNum'
-        :selectedGroupNum='selectedGroupNum'>
+        :selectedGroupNum='selectedGroupNum'
+        :selectedYear='selectedYear'
+        :selectedMonth='selectedMonth'>
+      <!-- <GroupListCheck
+      :csvText='csvText'
+      :selectedTotalGroupNum='selectedTotalGroupNum'
+      :selectedGroupNum='selectedGroupNum'> -->
       </GroupListCheck>
     </div>
     <div v-else-if="groupList">
@@ -23,6 +29,37 @@
 
       <div class="box">
         <div class="columns is-mobile is-centered">
+          <div class="column is-half"><h2 class="title">グループ作成年月設定</h2></div>
+          <div class="column is-half"><h2 class="title">Selected: {{ selectedYear }} 年 {{ selectedMonth }}月</h2></div>
+        </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">年を決めてください。</div>
+          <div class="column is-half">
+            <div class="field select is-primary">
+              <select v-model="selectedYear">
+                <option v-for="option in yearoptions" v-bind:value="option.value" v-bind:key="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">月を決めてください。</div>
+          <div class="column is-half">
+            <div class="field select is-primary">
+              <select v-model="selectedMonth">
+                <option v-for="option in monthoptions" v-bind:value="option.value" v-bind:key="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="columns is-mobile is-centered">
           <div class="column is-half"><h2 class="title">グループ数</h2></div>
           <div class="column is-half"><h2 class="title">Selected: {{ selectedTotalGroupNum }} groups</h2></div>
         </div>
@@ -31,7 +68,7 @@
           <div class="column is-half">
             <div class="field select is-primary">
               <select v-model="selectedTotalGroupNum">
-                <option v-for="option in options" v-bind:value="option.value">
+                <option v-for="option in options" v-bind:value="option.value" v-bind:key="option.value">
                   {{ option.text }}
                 </option>
               </select>
@@ -50,7 +87,7 @@
           <div class="column is-half">
             <div class="field select is-primary">
               <select v-model="selectedGroupNum">
-                <option v-for="option in options" v-bind:value="option.value">
+                <option v-for="option in options" v-bind:value="option.value" v-bind:key="option.value">
                   {{ option.text }}
                 </option>
               </select>
@@ -86,6 +123,8 @@ export default {
     return {
       selectedTotalGroupNum: 0,
       selectedGroupNum: 0,
+      selectedYear: 0,
+      selectedMonth: 0,
       options: [
         { text: 'One', value: 1 },
         { text: 'Two', value: 2 },
@@ -99,6 +138,28 @@ export default {
         { text: 'ten', value: 10 },
         { text: 'eleven', value: 11 },
         { text: 'twelve', value: 12 },
+      ],
+      yearoptions: [
+        { text: '2017', value: '2017' },
+        { text: '2018', value: '2018' },
+        { text: '2019', value: '2019' },
+        { text: '2020', value: '2020' },
+        { text: '2021', value: '2021' },
+        { text: '2022', value: '2022' },
+      ],
+      monthoptions: [
+        { text: '1', value: '01'},
+        { text: '2', value: '02' },
+        { text: '3', value: '03' },
+        { text: '4', value: '04' },
+        { text: '5', value: '05' },
+        { text: '6', value: '06' },
+        { text: '7', value: '07' },
+        { text: '8', value: '08' },
+        { text: '9', value: '09' },
+        { text: '10', value: '10' },
+        { text: '11', value: '11' },
+        { text: '12', value: '12' }
       ],
       groupListCheck :false,
       groupList :false,

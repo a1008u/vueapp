@@ -21,31 +21,15 @@
 
 <script>
 import db from "@/firebase/init";
+import Firestore from "../util/Firestore";
+
 export default {
   name: 'grandmenu',
   created: async function(){
 
-    async function getName(collectionName, docName) {
-      return db.collection(collectionName).doc(docName)
-        .get()
-        .then(snapshot => snapshot)
-        .catch(err => err)
-    }
-
-    let testName = await getName("test", "part1");
-    console.log(testName)
-    console.log(testName.data())
-    // testName.forEach(data => {
-    //   console.log(data)
-    // });
-    // db.collection("test")
-    //   .get()
-    //   .then(snapshot => {
-    //     console.log(snapshot)
-    //     snapshot.forEach(doc => {
-    //       console.log(doc.data());
-    //     });
-    //   });
+    // let testName = await Firestore.getFireStore("test", "part1");
+    // console.log(testName)
+    // console.log(testName.data())
   }
 };
 </script>

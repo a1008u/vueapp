@@ -18,6 +18,10 @@ const mkCkGroups = (tempMembers, selectedGroupNum) => {
 const mkDabuleCkGroupList = (ckGroups, storeMembers) => {
   let dabuleCkGroupList = [];
   let dabuleCkGroup = [];
+
+  console.log(ckGroups)
+  console.log(storeMembers)
+
   for (let members of ckGroups) {
     for (let group of storeMembers.group) {
       for (let member of group) {
@@ -77,11 +81,20 @@ const mkViewGroup = (outGroup) => {
   return newArr
 }
 
+const registerOut = (i, yearMonths, ckGroups) => {
+  // チェック
+  const dabuleCkGroupList = Group.mkDabuleCkGroupList(ckGroups, yearMonths[i]);
+  // 該当箇所を抽出
+  const outGroup = Group.mkOutGroup(ckGroups, dabuleCkGroupList);
+  return Group.mkViewGroup(outGroup);
+}
+
 const Group = {
   mkCkGroup,
   mkCkGroups,
   mkDabuleCkGroupList,
   mkOutGroup,
-  mkViewGroup
+  mkViewGroup,
+  registerOut
 };
 export default Group;

@@ -22,6 +22,7 @@
           </ul>
         </div>
       </div>
+
     </article>
   </div>
 </template>
@@ -31,6 +32,8 @@ import {mapGetters} from 'vuex';
 import axios from 'axios';
 import BackNumber from '../components/backnumber/BackNumber.vue';
 import { API_URL } from '../constants';
+import db from "@/firebase/init";
+import Firestore from "../util/Firestore";
 
 export default {
   name: 'backnumbermenu',
@@ -48,8 +51,8 @@ export default {
   methods:{
   },
   async mounted () {
-    const {data} = await axios.get(`${API_URL}/total`);
-    this.total = data;
+    const groupTotal = await Firestore.getFireStore("group", "total");
+    this.total = groupTotal.data().target;
     console.log(this.total);
   },
   computed:{
