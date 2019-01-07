@@ -33,7 +33,7 @@
                 <div class="content">
                   <article v-if="out1.length !== 0 && out1[groupindex][index].length !== 0" class="message is-danger">
                     <div class="message-header">
-                      <p>１ヶ月前</p>
+                      <p>１回前</p>
                     </div>
                     <div class="message-body">
                       <p v-for="(value1, index1) in out1[groupindex][index]" :key='index1'>
@@ -43,7 +43,7 @@
                   </article>
                   <article v-if="out2.length !== 0 && out2[groupindex][index].length !== 0" class="message is-danger">
                     <div class="message-header">
-                      <p>2ヶ月前</p>
+                      <p>2回前</p>
                     </div>
                     <div class="message-body">
                       <p v-for="(value2, index2) in out2[groupindex][index]" :key='index2'>
@@ -53,7 +53,7 @@
                   </article>
                   <article v-if="out3.length !== 0 && out3[groupindex][index].length !== 0" class="message is-danger">
                     <div class="message-header">
-                      <p>3ヶ月前</p>
+                      <p>3回前</p>
                     </div>
                     <div class="message-body">
                       <p v-for="(value3, index3) in out3[groupindex][index]" :key='index3'>

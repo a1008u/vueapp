@@ -23,10 +23,14 @@ export async function exe(year, month, tempMembers) {
   console.log('resultTotal : ', resultTotal)
   console.log('resultGroup : ', resultGroup)
 
-  return batch
-    .commit()
-    .then(() => true)
-    .catch(err => err);
+  if (resultTotal && resultGroup) {
+    return batch
+      .commit()
+      .then(() => true)
+      .catch(err => err);
+  } else {
+    return false
+  }
 }
 
 /**
@@ -45,7 +49,9 @@ export async function saveTotalFirestore(batch, year, month){
   }
 
   async function registerTotal(batch, year, month, groupTotalTargets) {
+    // console.log('groupTotalTargets : ', groupTotalTargets)
     for (let totalTarget of groupTotalTargets) {
+      console.log('groupTotalTargets : ', totalTarget)
       // update
       if (totalTarget.targetyear === year) {
         totalTarget.totalmonth.push(month)
@@ -53,12 +59,13 @@ export async function saveTotalFirestore(batch, year, month){
         return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
       } else {
         // 新規（insert）
-        if(totalTarget.targetyear !== year && totalTarget.targetyear+1 === year) {
+        const numberYear= Number(totalTarget.targetyear) + 1
+        if(totalTarget.targetyear !== year && numberYear.toString() === year) {
           const newTarget = {}
           newTarget.targetyear = year
           newTarget.totalmonth = [month]
           groupTotalTargets.push(newTarget)
-          console.log('groupTotalTarget 2 : ', groupTotalTarget)
+          console.log('groupTotalTargetNew : ', groupTotalTargets)
           return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
         }
       }

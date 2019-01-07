@@ -14,10 +14,6 @@
         :selectedGroupNum='selectedGroupNum'
         :selectedYear='selectedYear'
         :selectedMonth='selectedMonth'>
-      <!-- <GroupListCheck
-      :csvText='csvText'
-      :selectedTotalGroupNum='selectedTotalGroupNum'
-      :selectedGroupNum='selectedGroupNum'> -->
       </GroupListCheck>
     </div>
     <div v-else-if="groupList">
@@ -98,12 +94,12 @@
 
       <div class="box">
         <div class="columns is-mobile is-centered">
-          <div class="column is-half">
+          <div class="column">
             <button @click="groupListMk" class="button is-info is-rounded">GroupListCheck button</button>
           </div>
-          <div class="column is-half">
+          <!-- <div class="column is-half">
             <button @click="groupList = !groupList" class="button is-info is-rounded">GroupList button</button>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -126,21 +122,23 @@ export default {
       selectedYear: 0,
       selectedMonth: 0,
       options: [
-        { text: 'One', value: 1 },
-        { text: 'Two', value: 2 },
-        { text: 'Three', value: 3 },
-        { text: 'four', value: 4 },
-        { text: 'five', value: 5 },
-        { text: 'six', value: 6 },
-        { text: 'seven', value: 7 },
-        { text: 'eight', value: 8 },
-        { text: 'nine', value: 9 },
-        { text: 'ten', value: 10 },
-        { text: 'eleven', value: 11 },
-        { text: 'twelve', value: 12 },
+        { text: '1', value: 1 },
+        { text: '2', value: 2 },
+        { text: '3', value: 3 },
+        { text: '4', value: 4 },
+        { text: '5', value: 5 },
+        { text: '6', value: 6 },
+        { text: '7', value: 7 },
+        { text: '8', value: 8 },
+        { text: '9', value: 9 },
+        { text: '10', value: 10 },
+        { text: '11', value: 11 },
+        { text: '12', value: 12 },
+        { text: '13', value: 13 },
+        { text: '14', value: 14 },
+        { text: '15', value: 15 },
       ],
       yearoptions: [
-        { text: '2017', value: '2017' },
         { text: '2018', value: '2018' },
         { text: '2019', value: '2019' },
         { text: '2020', value: '2020' },

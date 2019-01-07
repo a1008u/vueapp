@@ -79,7 +79,7 @@ export default {
         // 状態変更 -------------------------------
         this.registerState = !this.registerState;
 
-        if(this.registerState) {
+        if(result) {
           this.resultRegister = '登録しました。'
         } else {
           this.resultRegister = 'すでに登録されています。'

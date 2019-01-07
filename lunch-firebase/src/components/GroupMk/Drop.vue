@@ -1,7 +1,7 @@
 <template>
   <div id="drop" class="drop">
 
-    <div class="field" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop">
+    <div class="field" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop" @change="onDrop">
       <div class="file is-centered is-boxed is-success has-name">
         <label class="file-label">
           <input class="file-input" type="file" name="resume">
@@ -11,7 +11,7 @@
             </span>
             <span class="file-label">
               {{Fileselect}}
-              <input class="drop__input" type="file" multiple="multiple" @change="onDrop">
+              <input class="drop__input" type="file" multiple="multiple" >
             </span>
           </span>
         </label>
@@ -34,12 +34,13 @@ export default {
   data(){
     return {
       tempMembers:[],
-      Fileselect:'ファイルを選択',
+      Fileselect:'csvファイルをドラックか選択してください',
     }
   },
   props:['targetGroup'],
   methods:{
     onDrop:function(event){
+      console.log('  --done ')
       let fileList = event.target.files ? event.target.files: event.dataTransfer.files;
       console.log(fileList[0])
       if(fileList) {
@@ -50,8 +51,10 @@ export default {
         let results = [];
 
         reader.onload = (e) => {
-          results = e.target.result.replace(/\n/ig, '').split(',');
-          console.log(results)
+          const names = e.target.result.replace(/\n/ig, '').split(',');
+          console.log(names)
+          const results = names.map(name => name.replace(/\s+/g, ""))
+          console.log('uploadFile : ', results)
           this.$emit('set-csvtext', results);
         }
         reader.readAsText(fileList[0]);
