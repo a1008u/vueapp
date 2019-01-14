@@ -20,7 +20,7 @@
 
     <Cardedit 
       :group='group' :modeFix='modeFix'
-      :out1='out1' :out2='out2' :out3='out3'></Cardedit>
+      :out1='out1' :out2='out2' :out3='out3' :out4='out4' :out5='out5'></Cardedit>
 
   </div>
 </template>
@@ -50,6 +50,8 @@ export default {
       out1 :[],
       out2 :[],
       out3 :[],
+      out4 :[],
+      out5 :[],
       modeFix :false,
       buttonState: false,
       applicants:[],
@@ -110,6 +112,8 @@ export default {
       this.out1=[];
       this.out2=[];
       this.out3=[];
+      this.out4=[];
+      this.out5=[];
 
     },
     async ck(){
@@ -121,21 +125,26 @@ export default {
 
       // チェック対処を取得(対象年月から3回分過去のグループを取得)
       const targetYearMonths = await Daily.mkTargetYearMonthsViaFirastore()
-      // const targetYear = this.$route.params.yearmonth.slice(0,4);
-      // const targetmonth = this.$route.params.yearmonth.slice(5,7);
       const [targetYear, targetmonth] = this.yearmonth.split('_');
       const index = targetYearMonths.indexOf(`${targetYear}${targetmonth}`);
-      const targets = targetYearMonths.slice(index + 1, index + 4);
+      const targets = targetYearMonths.slice(index + 1, index + 6);
       const yearMonths = await Daily.mkTargetYearMonthBkViaFirestore(targets)
+
+      console.log('targets : ', targets)
 
       // 重複チェック（1回前 -> 2回前 -> 3回前）
       this.out1 = (yearMonths.length > 0) ? Group.registerOut(0, yearMonths, ckGroups) : [];
       this.out2 = (yearMonths.length > 1) ? Group.registerOut(1, yearMonths, ckGroups) : [];
       this.out3 = (yearMonths.length > 2) ? Group.registerOut(2, yearMonths, ckGroups) : [];
+      this.out4 = (yearMonths.length > 3) ? Group.registerOut(3, yearMonths, ckGroups) : [];
+      this.out5 = (yearMonths.length > 4) ? Group.registerOut(4, yearMonths, ckGroups) : [];
 
       console.log('out1 : ', this.out1)
       console.log('out2 : ', this.out2)
       console.log('out3 : ', this.out3)
+      console.log('out4 : ', this.out4)
+      console.log('out5 : ', this.out5)
+
 
     }
   },

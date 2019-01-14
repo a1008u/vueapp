@@ -16,21 +16,17 @@ const mkCkGroups = (tempMembers, selectedGroupNum) => {
 }
 
 const mkDabuleCkGroupList = (ckGroups, storeMembers) => {
+  console.log(' --- mkDabuleCkGroupList --- ')
   let dabuleCkGroupList = [];
   let dabuleCkGroup = [];
-
-  console.log(ckGroups)
-  console.log(storeMembers)
 
   for (let members of ckGroups) {
     for (let group of storeMembers.group) {
       for (let member of group) {
         if (members.includes(member.name)) {
-          group.forEach(tempMember => {
-            if (tempMember.name !== member.name) {
-              dabuleCkGroup.push(tempMember.name);
-            }
-          });
+          group
+            .filter(tempMember => tempMember.name !== member.name)
+            .map(tempMember => dabuleCkGroup.push(tempMember.name))
         }
       }
     }
@@ -41,28 +37,22 @@ const mkDabuleCkGroupList = (ckGroups, storeMembers) => {
 }
 
 const mkOutGroup = (ckGroups, dabuleCkGroupList) => {
+  console.log(' --- mkOutGroup --- ')
   let outGroup = [];
-  let outMember = [];
   ckGroups.forEach((members, index) => {
-    members.forEach(member => {
-      if (dabuleCkGroupList[index].includes(member)) {
-        outMember.push(member);
-      }
-    });
+    const outMember = members.filter(member => dabuleCkGroupList[index].includes(member))
     outGroup.push(outMember);
-    outMember = [];
   });
   return outGroup;
 }
 
 const mkCkGroup = (group) => {
-  let tmpGroup = [];
+  console.log(' --- ck --- ')
   const ckGroups = [];
   group.forEach(glists => {
     glists.forEach( glist => {
-      glist.forEach(member => tmpGroup.push(member.name))
+      const tmpGroup = glist.map(member => member.name)
       ckGroups.push(tmpGroup);
-      tmpGroup = [];
     })
   });
   return ckGroups;
