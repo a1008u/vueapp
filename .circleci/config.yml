@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - run: echo "hello world"
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+          working_directory: /home/circleci/project/lunch/
+      - run:
+          name: unit test exec
+          command: yarn run test:unit
+          working_directory: /home/circleci/project/lunch/
