@@ -1,8 +1,6 @@
 <template>
   <div id="grandmenu">
-
     <div v-if="buttonState">
-
         <div class="box">
           <div class="columns is-mobile is-centered">
             <div class="column is-half">
@@ -13,10 +11,8 @@
             </div>
           </div>
         </div>
-
     </div>
     <div v-else>
-
         <div class="box">
           <div class="columns is-mobile is-centered">
             <div class="column is-one-third">
@@ -30,9 +26,7 @@
             </div>
           </div>
         </div>
-
     </div>
-
   </div>
 </template>
 
@@ -40,6 +34,8 @@
 
 export default {
   name: 'registerbuttonset',
+  components: {
+    },
   props:['buttonState'],
   data(){
     return {

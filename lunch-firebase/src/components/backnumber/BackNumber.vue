@@ -2,6 +2,8 @@
   <div id="grandmenu">
     <div class="message-header">
       <router-link class="button is-info is-rounded" to="/backnumbermenu">back</router-link>
+      <vue-csv-downloader class="button is-link is-rounded"
+        :data="csvteam" :fields="csvcolume" :download-name='csvfile'>csv取得</vue-csv-downloader>
     </div>
 
     <br />
@@ -10,15 +12,15 @@
       {{resultUpdate}}<br />
     </div>
     <div v-else>
-      <RegisterButtonSet 
+      <RegisterButtonSet
         :buttonState='buttonState' :viewContents='viewContents'
-        @save='save' @confirm='confirm' 
+        @save='save' @confirm='confirm'
         @fix='fix' @ck='ck'></RegisterButtonSet>
     </div>
 
     <br />
 
-    <Cardedit 
+    <Cardedit
       :group='group' :modeFix='modeFix'
       :out1='out1' :out2='out2' :out3='out3' :out4='out4' :out5='out5'></Cardedit>
 
@@ -39,6 +41,7 @@ import Group from '../../util/Group.js';
 import Update from '../../util/Update.js';
 import db from "@/firebase/init";
 import Firestore from "../../util/Firestore";
+import VueCsvDownloader from 'vue-csv-downloader';
 
 export default {
   name: 'backnumber',
@@ -52,6 +55,9 @@ export default {
       out3 :[],
       out4 :[],
       out5 :[],
+      csvfile:'',
+      csvteam:[],
+      csvcolume: ['グループ','名前1', '名前2', '名前3', '名前4'],
       modeFix :false,
       buttonState: false,
       applicants:[],
@@ -86,11 +92,26 @@ export default {
     this.group = newArr;
     console.log('group : ', this.group);
 
+    // csv用作成
+    newArr.forEach(g => {
+      g.forEach(team => {
+        let t = {}
+        t.id = this.csvteam.length + 1
+        t['グループ'] = this.csvteam.length + 1
+        team.forEach((person, index) => t[`名前${index + 1}`] = person['name'])
+        this.csvteam.push(t)
+      })
+    })
+
+    this.csvfile = `${year}_${month}_HaveFunLunch`
+
+
   },
   components:{
     Card:Card,
     Cardedit:Cardedit,
     RegisterButtonSet:RegisterButtonSet,
+    VueCsvDownloader,
   },
   methods:{
     fix(){

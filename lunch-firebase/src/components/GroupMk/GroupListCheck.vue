@@ -81,12 +81,7 @@ export default {
         // 状態変更 -------------------------------
         this.registerState = !this.registerState;
 
-        if(result) {
-          this.resultRegister = '登録しました。'
-        } else {
-          this.resultRegister = 'すでに登録されています。'
-        }
-
+        this.resultRegister = (result) ? '登録しました。':'すでに登録されています。'
         console.log(this.resultRegister)
 
       } else {
@@ -136,7 +131,7 @@ export default {
         this.csvText.forEach(member => this.applicants.push(member))
       }
 
-      let newMembers=[];
+      const newMembers=[];
       let group = [];
       let newMember = [];
       while(newMembers.length !== this.selectedTotalGroupNum){

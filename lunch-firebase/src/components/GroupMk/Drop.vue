@@ -1,6 +1,5 @@
 <template>
   <div id="drop" class="drop">
-
     <div class="field" @dragleave.prevent @dragover.prevent @drop.prevent="onDrop" @change="onDrop">
       <div class="file is-centered is-boxed is-success has-name">
         <label class="file-label">
@@ -17,7 +16,6 @@
         </label>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -40,16 +38,11 @@ export default {
   props:['targetGroup'],
   methods:{
     onDrop:function(event){
-      console.log('  --done ')
-      let fileList = event.target.files ? event.target.files: event.dataTransfer.files;
+      const fileList = event.target.files ? event.target.files: event.dataTransfer.files;
       console.log(fileList[0])
       if(fileList) {
         this.Fileselect = fileList[0].name
-
         const reader = new FileReader
-        const stream = csv()
-        let results = [];
-
         reader.onload = (e) => {
           const names = e.target.result.replace(/\n/ig, '').split(',');
           console.log(names)
@@ -58,7 +51,6 @@ export default {
           this.$emit('set-csvtext', results);
         }
         reader.readAsText(fileList[0]);
-
       }
     }
   },
