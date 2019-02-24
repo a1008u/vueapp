@@ -1,6 +1,6 @@
 <template>
-  <div id="grandmenu">
-    <article class="message">
+  <section  id="backnumbermenu" class="backnumbermenu">
+    <article class="container message">
       <!-- menu -->
       <div class="message-header">
         <router-link class="button is-info is-rounded" to="/">GrandMenu</router-link>
@@ -24,7 +24,7 @@
       </div>
 
     </article>
-  </div>
+  </section >
 </template>
 
 <script>
@@ -65,5 +65,11 @@ export default {
 <style scoped>
 a{
   text-decoration:none;
+}
+.backnumbermenu{
+  height: 90vh;
+}
+.container{
+  top: 10%;
 }
 </style>

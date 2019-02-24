@@ -1,5 +1,5 @@
 <template>
-  <div id="groupmk" class="groupmk">
+  <section  id="groupmk" class="groupmk">
 
     <div class="message-header">
       <router-link class="button is-info is-rounded" to="/">GroudMenu</router-link>
@@ -105,7 +105,7 @@
 
     </div>
 
-  </div>
+  </section>
 </template>
 
 <script>
@@ -191,7 +191,11 @@ export default {
 
 <style scoped>
 .groupmk{
+  height: 80vh;
   margin: 20px;
+}
+.container{
+  top: 10%;
 }
 .columns{
   text-align: center;
