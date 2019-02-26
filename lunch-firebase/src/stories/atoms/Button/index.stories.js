@@ -8,6 +8,7 @@ import Button from "./../../../components/atoms/Button/Button.vue";
 import IconButton from "./../../../components/atoms/Button/IconButton.vue";
 import MkgroupIconbutton from "./../../../components/atoms/Button/MkgroupIconbutton.vue";
 import BacknumbermenuIconbutton from "./../../../components/atoms/Button/BacknumbermenuIconbutton.vue";
+import BacknumbermonthButton from "./../../../components/atoms/Button/BacknumbermonthButton.vue";
 
 // router用のサンプル
 const Home = { template: "<div>Home</div>"};
@@ -62,6 +63,27 @@ storiesOf("atoms-button", module)
       template: `
         <div style="display: flex;">
           <backnumbermenu-iconbutton option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>check the backnumber</backnumbermenu-iconbutton>
+        </div>`
+    }))
+  )
+  .add(
+    "BacknumbermonthButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { BacknumbermonthButton },
+      template: `
+        <div style="display: flex;">
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>1</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>2</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>3</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>4</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>5</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>6</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>7</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>8</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>9</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>10</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>11</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>12</backnumbermonth-button>
         </div>`
     }))
   );
