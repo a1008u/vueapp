@@ -13,13 +13,20 @@ import BacknumbermonthButton from "./../../../components/atoms/Button/Backnumber
 // router用のサンプル
 const Home = { template: "<div>Home</div>"};
 const About = { template: "<div>About</div>" };
+const Back = { template: "<div>Back</div>" };
 
 storiesOf("atoms-button", module)
   .addDecorator(VueInfoAddon)
   .addDecorator(StoryRouter({}, {
         routes: [
           { path: "/groupmk", component: Home },
-          { path: "/backnumbermenu", component: About }
+          { path: "/backnumbermenu", component: About },
+          {
+            path: "/backnumber/:yearmonth",
+            name: "backnumber",
+            component: Back,
+            props: true
+          }
         ]
       }
     )
@@ -70,20 +77,25 @@ storiesOf("atoms-button", module)
     "BacknumbermonthButtonのsample",
     withNotes(MarkdownText)(() => ({
       components: { BacknumbermonthButton },
+      data() {
+        return {
+          year:'2018'
+        }
+      },
       template: `
         <div style="display: flex;">
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>1</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>2</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>3</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>4</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>5</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>6</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>7</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>8</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>9</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>10</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>11</backnumbermonth-button>
-        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>12</backnumbermonth-button>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='1'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='2'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='3'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='4'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='5'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='6'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='7'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='8'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='9'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='10'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='11'/>
+        <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='12'/>
         </div>`
     }))
   );

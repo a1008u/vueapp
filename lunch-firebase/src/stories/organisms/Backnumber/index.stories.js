@@ -4,19 +4,19 @@ import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
 
-import BacknumberYearmonth from "./../../../components/molecules/Backnumber/BacknumberYearmonth.vue";
+import BacknumberList from "./../../../components/organisms/Backnumber/BacknumberList.vue";
 
 const Home = { template: "<div>Home</div>"};
 const About = { template: "<div>About</div>" };
 const Back = { template: "<div>Back</div>" };
 
-storiesOf("molecules-Backnumber", module)
+
+storiesOf("organisms-Backnumber", module)
   .addDecorator(VueInfoAddon)
   .addDecorator(StoryRouter({}, {
         routes: [
           { path: "/", component: Home },
           { path: "/groupmk", component: Home },
-          { path: "/backnumbermenu", component: About },
           {
             path: "/backnumber/:yearmonth",
             name: "backnumber",
@@ -30,7 +30,7 @@ storiesOf("molecules-Backnumber", module)
   .add(
     "BacknumberYearmonthのsample",
     withNotes(MarkdownText)(() => ({
-      components: { BacknumberYearmonth },
+      components: { BacknumberList },
       data() {
         return {
           month: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
@@ -38,7 +38,7 @@ storiesOf("molecules-Backnumber", module)
       },
       template: `
         <div style="display: flex;">
-          <backnumber-yearmonth year='2018' :month="month" />
+          <backnumber-list></backnumber-list>
         </div>`
     }))
   );

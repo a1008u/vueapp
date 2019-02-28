@@ -1,10 +1,10 @@
 <template>
   <div id="BacknumbermonthButton">
-    <div :class="['extendsparts','button',(option1 ? option1 : ''),option2 ? option2 : '']"
-    :name="name"
-    @click="$click('save')">
-      <slot/>
-    </div>
+    <router-link
+      :class="['extendsparts','button',(option1 ? option1 : ''),option2 ? option2 : '']"
+      :to="{ name : 'backnumber', params : { yearmonth:`${year}_${month}`}}">
+      {{month}}月
+    </router-link>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     }
   },
   props: {
-    name: {
+    month: {
       type: String
     },
     option1: {
@@ -24,14 +24,12 @@ export default {
     },
     option2: {
       type: String
+    },
+    year: {
+      type: String
     }
   },
   components:{
-  },
-  methods:{
-    click (e) {
-      this.$emit('click', e)
-    },
   },
   computed:{
   },
@@ -42,7 +40,7 @@ export default {
 
 <style lang="css" scoped>
 .extendsparts{
-    width: 50px;
+    width: 60px;
     height: 50px;
 }
 </style>

@@ -26,7 +26,7 @@ storiesOf("atoms-nav", module)
     withNotes(MarkdownText)(() => ({
       components: { NavbarItem },
       template: `
-        <navbar-item></navbar-item>
+        <navbar-item />
       `
     }))
   );

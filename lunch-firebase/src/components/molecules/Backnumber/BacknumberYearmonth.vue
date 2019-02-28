@@ -1,19 +1,10 @@
 <template>
   <div id="Backnumberyearmonth">
-    <base-text class='title' :label='title'></base-text>
+    <base-text class='title' :label='year'></base-text>
     <div class="field is-grouped is-grouped-multiline">
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>1</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>2</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>3</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>4</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>5</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>6</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>7</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>8</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>9</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>10</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>11</backnumbermonth-button>
-      <backnumbermonth-button class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>12</backnumbermonth-button>
+        <backnumbermonth-button v-for="(m, index) in month" :key='index' :year='year' :month='m'
+        class='control' option1='is-info' option2='is-outlined' option3='is-large' iconoption='check'>
+        </backnumbermonth-button>
     </div>
   </div>
 </template>
@@ -28,9 +19,18 @@ export default {
     BacknumbermonthButton: BacknumbermonthButton,
     BaseText: BaseText
   },
+  props: {
+    year: {
+      type: String,
+      description: "登録している年"
+    },
+    month: {
+      type: Array,
+      description: "登録している月"
+    }
+  },
   data(){
     return {
-      title:'2018'
     }
   },
 };
