@@ -6,6 +6,7 @@ import MarkdownText from "./MarkdownText.md";
 import BaseText from "./../../../components/atoms/Text/BaseText.vue";
 import TitleText from "./../../../components/atoms/Text/TitleText.vue";
 import SubtitleText from "./../../../components/atoms/Text/SubtitleText.vue";
+import IconText from "./../../../components/atoms/Text/IconText.vue";
 
 
 storiesOf("atoms-Text", module)
@@ -38,6 +39,24 @@ storiesOf("atoms-Text", module)
       return {
         components: { SubtitleText },
         template: `<subtitle-text label="${subtitleText}"></subtitle-text>" />`
+      }
+    }
+  ))
+  .add(
+    "IconTextのsample",
+    withNotes(MarkdownText)(() => {
+      return {
+        components: { IconText },
+        data() {
+          return {
+            iconText: text('IconTextを入力してください。', 'これはアイコンテキスト用のテキストに利用します。')
+          }
+        },
+        template: `
+        <div style="display: flex;">
+          <icon-text :text="iconText" iconoption='users'></icon-text>
+          <icon-text :text="iconText" iconoption='user-circle'></icon-text>
+        </div>`
       }
     }
   ));

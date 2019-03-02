@@ -1,9 +1,7 @@
 <template>
   <div id="grandmenu">
     <div class="message-header">
-      <router-link class="button is-info is-rounded" to="/backnumbermenu">back</router-link>
-      <vue-csv-downloader class="button is-link is-rounded"
-        :data="csvteam" :fields="csvcolume" :download-name='csvfile'>csv取得</vue-csv-downloader>
+      <csv-button :csvteam="csvteam" :csvcolume="csvcolume" :csvfile='csvfile'/>
     </div>
 
     <br />
@@ -12,17 +10,12 @@
       {{resultUpdate}}<br />
     </div>
     <div v-else>
-      <RegisterButtonSet
-        :buttonState='buttonState' :viewContents='viewContents'
-        @save='save' @confirm='confirm'
-        @fix='fix' @ck='ck'></RegisterButtonSet>
+      <button-set :buttonState='buttonState' @save='save' @confirm='confirm' @fix='fix' @check='ck' />
     </div>
 
     <br />
 
-    <Cardedit
-      :group='group' :modeFix='modeFix'
-      :out1='out1' :out2='out2' :out3='out3' :out4='out4' :out5='out5'></Cardedit>
+    <cardset :group='group' :outs='outs' :modeFix='modeFix' :outsState='outsState'/>
 
   </div>
 </template>
@@ -30,26 +23,35 @@
 <script>
 import {mapGetters} from 'vuex';
 import axios from 'axios';
-import { importMembers } from '../../group/member.js'
-import { API_URL } from '../../constants';
-import Card from '../Card/Card';
-import Cardedit from '../Card/CardEdit';
-import RegisterButtonSet from '../buttonSet/RegisterButtonSet';
-import Save from '../../util/Save.js';
-import Daily from '../../util/Daily.js';
-import Group from '../../util/Group.js';
-import Update from '../../util/Update.js';
+import { API_URL } from '../constants';
+import RegisterButtonSet from '@/components/buttonSet/RegisterButtonSet';
+import Save from '../util/Save.js';
+import Daily from '../util/Daily.js';
+import Group from '../util/Group.js';
+import Update from '../util/Update.js';
 import db from "@/firebase/init";
-import Firestore from "../../util/Firestore";
+import Firestore from "../util/Firestore";
 import VueCsvDownloader from 'vue-csv-downloader';
+
+import Cardset from "@/components/organisms/Card/Cardset"
+import CsvButton from "@/components/atoms/Button/CsvButton"
+import ButtonSet from "@/components/molecules/ButtonSet/ButtonSet"
 
 export default {
   name: 'backnumber',
   props:['targetGroup','yearmonth'],
+  components:{
+    Cardset:Cardset,
+    CsvButton:CsvButton,
+    RegisterButtonSet:RegisterButtonSet,
+    ButtonSet:ButtonSet,
+  },
   data(){
     return {
       tempMembers:[],
       group:[],
+      outsState:false,
+      outs :[this.out1,this.out2,this.out3,this.out4,this.out5],
       out1 :[],
       out2 :[],
       out3 :[],
@@ -107,17 +109,13 @@ export default {
 
 
   },
-  components:{
-    Card:Card,
-    Cardedit:Cardedit,
-    RegisterButtonSet:RegisterButtonSet,
-    VueCsvDownloader,
-  },
   methods:{
     fix(){
+      console.log('========','fix')
       this.modeFix = !this.modeFix;
     },
     confirm(){
+      console.log('========','conf')
       this.buttonState = !this.buttonState;
       this.modeFix = false;
     },
@@ -167,7 +165,24 @@ export default {
       console.log('out4 : ', this.out4)
       console.log('out5 : ', this.out5)
 
+      if(this.outs.length !== 0) {
+        this.outs = []
+        this.outs.push(this.out1)
+        this.outs.push(this.out2)
+        this.outs.push(this.out3)
+        this.outs.push(this.out4)
+        this.outs.push(this.out5)
+      }
 
+      console.log(this.outs)
+
+      console.log('------------')
+      this.outs
+        .flatMap(x => x)
+        .flatMap(x => x)
+        .filter(x => x.length !== 0)
+        .map(() => this.outsState = true)
+      return this.outsState;
     }
   },
   computed:{

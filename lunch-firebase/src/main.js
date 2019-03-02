@@ -34,7 +34,8 @@ const router = new VueRouter({
     {
       path: "/backnumber/:yearmonth",
       name: "backnumber",
-      component: () => import("./components/backnumber/BackNumber.vue"),
+      component: () => import("./pages/BacknumberContents.vue"),
+      // component: () => import("./components/backnumber/BackNumber.vue"),
       props: true
     }
   ]

@@ -1,8 +1,8 @@
 <template>
-  <div id="FixButton">
+  <div id="SaveButton">
     <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '']"
     :name="name"
-    @click="fix()">
+    @click="save('save')">
       <slot/>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'FixButton',
+  name: 'SaveButton',
   data(){
     return {
     }
@@ -29,8 +29,8 @@ export default {
   components:{
   },
   methods:{
-    fix(e) {
-      this.$emit('fix', e)
+    save(e) {
+      this.$emit('save', e)
     },
   },
   computed:{

@@ -9,6 +9,11 @@ import IconButton from "./../../../components/atoms/Button/IconButton.vue";
 import MkgroupIconbutton from "./../../../components/atoms/Button/MkgroupIconbutton.vue";
 import BacknumbermenuIconbutton from "./../../../components/atoms/Button/BacknumbermenuIconbutton.vue";
 import BacknumbermonthButton from "./../../../components/atoms/Button/BacknumbermonthButton.vue";
+import CsvButton from "./../../../components/atoms/Button/CsvButton.vue";
+import CheckButton from "./../../../components/atoms/Button/CheckButton.vue";
+import SaveButton from "./../../../components/atoms/Button/SaveButton.vue";
+import FixButton from "./../../../components/atoms/Button/FixButton.vue";
+import ConfirmButton from "./../../../components/atoms/Button/ConfirmButton.vue";
 
 // router用のサンプル
 const Home = { template: "<div>Home</div>"};
@@ -96,6 +101,107 @@ storiesOf("atoms-button", module)
         <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='10'/>
         <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='11'/>
         <backnumbermonth-button option1='is-info' option2='is-outlined' option3='is-large' iconoption='check' :year='year' :month='12'/>
+        </div>`
+    }))
+  )
+  .add(
+    "CsvButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { CsvButton },
+      data() {
+        return{
+          csvteam:[{"id":1,"グループ":1,"名前1":"馬渡由香子","名前2":"伊藤桂","名前3":"西村直輝","名前4":"青木大祐"},{"id":2,"グループ":2,"名前1":"岩渕桂太","名前2":"川辺美友紀","名前3":"小山内歩","名前4":"山中智史"},{"id":3,"グループ":3,"名前1":"古田悠美","名前2":"高﨑北斗","名前3":"中村功","名前4":"小川和久"},{"id":4,"グループ":4,"名前1":"谷保翠星","名前2":"大迫綾乃","名前3":"有川健澄","名前4":"薬師寺美紀"},{"id":5,"グループ":5,"名前1":"西村友樹雄","名前2":"内田達延","名前3":"青木玲奈","名前4":"金子朋美"},{"id":6,"グループ":6,"名前1":"天井健太","名前2":"間渕創","名前3":"清水大地","名前4":"林由莉"},{"id":7,"グループ":7,"名前1":"上本英","名前2":"佐々木明","名前3":"三林達也","名前4":"治田夏葉"},{"id":8,"グループ":8,"名前1":"清水明士","名前2":"鈴木翔","名前3":"柳本佑介","名前4":"森田晋成"},{"id":9,"グループ":9,"名前1":"古川結美乃","名前2":"田髙祥太郎","名前3":"鈴木優人","名前4":"高荒奈々"},{"id":10,"グループ":10,"名前1":"植松佑太","名前2":"岡部翔太","名前3":"柴原啓太","名前4":"五十嵐千裕"}],
+          csvcolume: ['グループ','名前1', '名前2', '名前3', '名前4'],
+          csvfile:'test'
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <csv-button :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile'>csv取得</csv-button>
+        </div>`
+    }))
+  )
+  .add(
+    "CheckButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { CheckButton },
+      data() {
+        return{
+          option1:'is-info',
+          option2:'is-outlined'
+        }
+      },
+      methods:{
+        check(){
+          console.log('test')
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <check-button :option1='option1' :option2='option2' @check='check'>重複確認</check-button>
+        </div>`
+    }))
+  )
+  .add(
+    "SaveButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { SaveButton },
+      data() {
+        return{
+          option1:'is-success',
+          option2:'is-outlined'
+        }
+      },
+      methods:{
+        save(){
+          console.log('test')
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <save-button :option1='option1' :option2='option2' @save='save'>保存</save-button>
+        </div>`
+    }))
+  )
+  .add(
+    "FixButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { FixButton },
+      data() {
+        return{
+          option1:'is-info',
+          option2:'is-outlined'
+        }
+      },
+      methods:{
+        fix(){
+          console.log('test')
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <fix-button :option1='option1' :option2='option2' @fix='fix'>編集</fix-button>
+        </div>`
+    }))
+  )
+  .add(
+    "ConfirmButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { ConfirmButton },
+      data() {
+        return{
+          option1:'is-success',
+          option2:'is-outlined'
+        }
+      },
+      methods:{
+        cofirm(){
+          console.log('test')
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <confirm-button :option1='option1' :option2='option2' @cofirm='cofirm'>確認</confirm-button>
         </div>`
     }))
   );

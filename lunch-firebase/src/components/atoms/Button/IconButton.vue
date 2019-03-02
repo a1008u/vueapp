@@ -31,7 +31,6 @@ export default {
       type: String,
       description: "iconを指定する。"
     }
-
   }
 };
 </script>

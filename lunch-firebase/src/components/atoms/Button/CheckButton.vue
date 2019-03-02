@@ -1,8 +1,8 @@
 <template>
-  <div id="FixButton">
+  <div id="CheckButton">
     <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '']"
     :name="name"
-    @click="fix()">
+    @click="check('check')">
       <slot/>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'FixButton',
+  name: 'CheckButton',
   data(){
     return {
     }
@@ -29,8 +29,8 @@ export default {
   components:{
   },
   methods:{
-    fix(e) {
-      this.$emit('fix', e)
+    check(e) {
+      this.$emit('check', e)
     },
   },
   computed:{
