@@ -1,58 +1,43 @@
 <template>
   <div id="grandmenu">
-    <div class="message-header">
-      <csv-button :csvteam="csvteam" :csvcolume="csvcolume" :csvfile='csvfile'/>
-    </div>
-
-    <br />
-
-    <div v-if='registerState'>
-      {{resultUpdate}}<br />
-    </div>
-    <div v-else>
-      <RegisterButtonSet
-        :buttonState='buttonState' :viewContents='viewContents'
-        @save='save' @confirm='confirm'
-        @fix='fix' @ck='ck'></RegisterButtonSet>
-    </div>
-
-    <br />
-
-    <cardset :group='group' :outs='outs' :modeFix='modeFix' :outsState='outsState'/>
-
+    <register-set
+      :registerState='registerState' :resultUpdate='resultUpdate'
+      :buttonState='buttonState' :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile'
+      @save='save' @confirm='confirm' @fix='fix' @check='ck'
+    />
+    <cardset class='cardset' :group='group' :outs='outs' :modeFix='modeFix' :outsState='outsState'/>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
 import axios from 'axios';
+import VueCsvDownloader from 'vue-csv-downloader';
+
+import db from "@/firebase/init";
+
 import { API_URL } from '../../../constants';
-import RegisterButtonSet from '@/components/buttonSet/RegisterButtonSet';
 import Save from '../../../util/Save.js';
 import Daily from '../../../util/Daily.js';
 import Group from '../../../util/Group.js';
 import Update from '../../../util/Update.js';
-import db from "@/firebase/init";
 import Firestore from "../../../util/Firestore";
-import VueCsvDownloader from 'vue-csv-downloader';
 
 import Cardset from "@/components/organisms/Card/Cardset"
-import CsvButton from "@/components/atoms/Button/CsvButton"
+import RegisterSet from "@/components/molecules/Register/RegisterSet"
 
 export default {
   name: 'backnumber',
   props:['targetGroup','yearmonth'],
   components:{
     Cardset:Cardset,
-    CsvButton:CsvButton,
-    RegisterButtonSet:RegisterButtonSet,
+    RegisterSet:RegisterSet
   },
   data(){
     return {
-      tempMembers:[],
       group:[],
       outsState:false,
-      outs :[this.out1,this.out2,this.out3,this.out4,this.out5],
+      outs :[],
       out1 :[],
       out2 :[],
       out3 :[],
@@ -63,20 +48,15 @@ export default {
       csvcolume: ['グループ','名前1', '名前2', '名前3', '名前4'],
       modeFix :false,
       buttonState: false,
-      applicants:[],
-      group :[],
-      viewContents:false,
       registerState:false,
-      resultUpdate: '更新中',
-      config : {headers: {'Content-Type': 'application/json'}}
+      resultUpdate: '更新中'
     }
   },
   async mounted() {
-    let [year, month] = this.yearmonth.split('_');
-    console.log(year)
-    console.log(month)
+    const [year, month] = this.yearmonth.split('_');
+    console.log('year : ', year, ' month : ', month)
 
-    let registeredGroupMember = await Firestore.getFireStore("groupmember", `${year}${month}`);
+    const registeredGroupMember = await Firestore.getFireStore("groupmember", `${year}${month}`);
     const data = []
     const count = Number(registeredGroupMember.data()['group']['count'])
     for (let g of Firestore.range(count)) {
@@ -84,8 +64,8 @@ export default {
       data.push(registeredGroupMember.data()['group'][c])
     }
 
-    let cnt = 3;                  // いくつずつに分割するか
-    let newArr = [];              // 新しく作る配列
+    const cnt = 3;                  // いくつずつに分割するか
+    const newArr = [];              // 新しく作る配列
     for(let i = 0; i < Math.ceil(data.length / cnt); i++) {
       let j = i * cnt;
       let p = data.slice(j, j + cnt);     // i*cnt 番目から i*cnt+cnt 番目まで取得
@@ -112,15 +92,16 @@ export default {
   },
   methods:{
     fix(){
+      console.log('========','fix')
       this.modeFix = !this.modeFix;
     },
     confirm(){
+      console.log('========','conf')
       this.buttonState = !this.buttonState;
       this.modeFix = false;
     },
     async save(){
-      this.viewContents = !this.viewContents;
-      let [year, month] = this.yearmonth.split('_');
+      const [year, month] = this.yearmonth.split('_');
 
       const result = await Update.updateGroupViaFireStore(year, month, this.group)
       this.resultUpdate = (result) ? '更新完了': '更新に失敗しました'
@@ -157,25 +138,16 @@ export default {
       this.out4 = (yearMonths.length > 3) ? Group.registerOut(3, yearMonths, ckGroups) : [];
       this.out5 = (yearMonths.length > 4) ? Group.registerOut(4, yearMonths, ckGroups) : [];
 
-      console.log('out1 : ', this.out1)
-      console.log('out2 : ', this.out2)
-      console.table(this.out2)
-      console.log('out3 : ', this.out3)
-      console.log('out4 : ', this.out4)
-      console.log('out5 : ', this.out5)
-
       if(this.outs.length !== 0) {
         this.outs = []
-        this.outs.push(this.out1)
-        this.outs.push(this.out2)
-        this.outs.push(this.out3)
-        this.outs.push(this.out4)
-        this.outs.push(this.out5)
       }
 
+      this.outs.push(this.out1)
+      this.outs.push(this.out2)
+      this.outs.push(this.out3)
+      this.outs.push(this.out4)
+      this.outs.push(this.out5)
       console.log(this.outs)
-
-      console.log('------------')
       this.outs
         .flatMap(x => x)
         .flatMap(x => x)
@@ -192,5 +164,7 @@ export default {
 </script>
 
 <style scoped>
-
+.cardset{
+  margin: 20px auto 0;
+}
 </style>

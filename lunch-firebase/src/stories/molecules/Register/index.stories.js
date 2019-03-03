@@ -3,17 +3,19 @@ import VueInfoAddon from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 
-import ButtonSet from "./../../../components/molecules/Button/ButtonSet.vue";
+import RegisterSet from "./../../../components/molecules/Register/RegisterSet.vue";
 
-storiesOf("molecules-ButtonSet", module)
+storiesOf("molecules-RegisterSet", module)
   .addDecorator(VueInfoAddon)
   .add(
-    "ButtonSetのsample",
+    "RegisterSetのsample",
     withNotes(MarkdownText)(() => ({
-      components: { ButtonSet },
+      components: { RegisterSet },
       data() {
         return {
           buttonState: false,
+          registerState: false,
+          resultUpdate: "test",
           csvteam:[
             {"id":1,"グループ":1,"名前1":"test1","名前2":"test2","名前3":"test3","名前4":"test4"},
             {"id":2,"グループ":2,"名前1":"test1","名前2":"test2","名前3":"test3","名前4":"test4"},
@@ -46,7 +48,8 @@ storiesOf("molecules-ButtonSet", module)
         }
       },
       template: `
-        <button-set
+        <register-set
+          :registerState='registerState' :resultUpdate='resultUpdate'
           :buttonState='buttonState' :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile'
           @save='save' @confirm='confirm' @fix='fix' @check='ck'
         />

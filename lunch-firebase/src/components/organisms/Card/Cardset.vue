@@ -1,5 +1,5 @@
 <template>
-  <div id="Cardset" class="card">
+  <div id="Cardset">
     <div class="columns is-mobile" v-for="(g, groupindex) in group" :key='groupindex'>
       <div class="column is-one-third" v-for="(members, index) in g" :key='index'>
         <base-cardset

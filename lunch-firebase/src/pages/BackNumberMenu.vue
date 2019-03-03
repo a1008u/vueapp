@@ -1,10 +1,5 @@
 <template>
   <section  id="backnumbermenu" class="backnumbermenu">
-    <!-- menu -->
-    <!-- <div class="message-header">
-      <router-link class="button is-info is-rounded" to="/">GrandMenu</router-link>
-    </div> -->
-
     <backnumber-list></backnumber-list>
   </section >
 </template>

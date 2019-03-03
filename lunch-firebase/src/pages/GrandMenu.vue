@@ -1,6 +1,6 @@
 <template>
   <section  id="grandmenu" class="grandmenu">
-      <menu-set class='container'></menu-set>
+      <menu-set class='container'/>
   </section >
 </template>
 
