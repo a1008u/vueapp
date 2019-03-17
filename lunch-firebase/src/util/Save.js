@@ -12,6 +12,7 @@ import Firestore from './Firestore';
  * @param {*} tempMembers : 登録用のグループ
  */
 export async function exe(year, month, tempMembers) {
+  debugger;
   const batch = db.batch();
 
   // totalの登録 -------------------------------
@@ -40,6 +41,9 @@ export async function exe(year, month, tempMembers) {
  * @param {*} month 
  */
 export async function saveTotalFirestore(batch, year, month){
+
+  debugger;
+
   let [yearmonths, groupTotalTargets] = await getExitTotal();
   if (yearmonths.includes(`${year}${month}`)) {
     return false;
@@ -49,27 +53,23 @@ export async function saveTotalFirestore(batch, year, month){
   }
 
   async function registerTotal(batch, year, month, groupTotalTargets) {
-    // console.log('groupTotalTargets : ', groupTotalTargets)
+    // 追加 (update
     for (let totalTarget of groupTotalTargets) {
       console.log('groupTotalTargets : ', totalTarget)
-      // update
       if (totalTarget.targetyear === year) {
         totalTarget.totalmonth.push(month)
         totalTarget.totalmonth.sort((a, b) => (a > b ? 1 : -1));
         return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
-      } else {
-        // 新規（insert）
-        const numberYear= Number(totalTarget.targetyear) + 1
-        if(totalTarget.targetyear !== year && numberYear.toString() === year) {
-          const newTarget = {}
-          newTarget.targetyear = year
-          newTarget.totalmonth = [month]
-          groupTotalTargets.push(newTarget)
-          console.log('groupTotalTargetNew : ', groupTotalTargets)
-          return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
-        }
       }
     }
+
+    // 新規（insert
+    const newTarget = {}
+    newTarget.targetyear = year
+    newTarget.totalmonth = [month]
+    groupTotalTargets.push(newTarget)
+    console.log('groupTotalTargetNew : ', groupTotalTargets)
+    return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
   }
 
   /**

@@ -6,7 +6,7 @@ import MarkdownText from "./MarkdownText.md";
 import InputText from "./../../../components/atoms/Input/InputText.vue";
 
 
-storiesOf("atoms-InputText", module)
+storiesOf("atoms-Input", module)
   .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add(

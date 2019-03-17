@@ -14,6 +14,7 @@ import CheckButton from "./../../../components/atoms/Button/CheckButton.vue";
 import SaveButton from "./../../../components/atoms/Button/SaveButton.vue";
 import FixButton from "./../../../components/atoms/Button/FixButton.vue";
 import ConfirmButton from "./../../../components/atoms/Button/ConfirmButton.vue";
+import MkgroupnewButton from "./../../../components/atoms/Button/MkgroupnewButton.vue";
 
 // router用のサンプル
 const Home = { template: "<div>Home</div>"};
@@ -139,17 +140,25 @@ storiesOf("atoms-button", module)
       data() {
         return{
           option1:'is-info',
-          option2:'is-outlined'
+          option2:'is-outlined',
+          loading:''
         }
       },
       methods:{
         check(){
-          console.log('test')
+          console.log('test');
+          this.loading = 'is-loading'
+          if(this.loading === 'is-loading') {
+            setTimeout(()=>{
+              this.loading = '';
+            }, 1000);
+          }
+
         }
       },
       template: `
         <div style="display: flex;">
-          <check-button :option1='option1' :option2='option2' @check='check'>重複確認</check-button>
+          <check-button :option1='option1' :option2='option2' :loading='loading' @check='check'>重複確認</check-button>
         </div>`
     }))
   )
@@ -215,4 +224,28 @@ storiesOf("atoms-button", module)
           <confirm-button :option1='option1' :option2='option2' @cofirm='cofirm'>確認</confirm-button>
         </div>`
     }))
+  )
+  .add(
+    "MkgroupnewButtonのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { MkgroupnewButton },
+      data() {
+        return{
+          option1:'is-success',
+          option2:'is-rounded'
+        }
+      },
+      methods:{
+        groupListMk(){
+          console.log('groupListMk')
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <mkgroupnew-button :option1='option1' :option2='option2' @groupListMk='groupListMk'>新規グループ作成</fix-button>
+        </div>`
+    }))
   );
+
+
+  

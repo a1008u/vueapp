@@ -9,7 +9,7 @@
           <confirm-button option1='is-info' option2='is-primary' @confirm='confirm'>入力し直す</confirm-button>
         </div>
         <div class="navbar-item">
-          <save-button option1='is-success' option2='is-outlined' @save='save'>保存</save-button>
+          <save-button option1='is-success' option2='is-outlined' :loadingsave='loadingsave' @save='save'>保存</save-button>
         </div>
       </div>
     </nav>
@@ -22,7 +22,7 @@
           <fix-button option1='is-info' option2='is-outlined' @fix='fix'>編集</fix-button>
         </div>
         <div class="navbar-item">
-          <check-button option1='is-info' option2='is-outlined' @check='check'>重複確認</check-button>
+          <check-button option1='is-info' option2='is-outlined' :loadingck='loadingck' @check='check'>重複確認</check-button>
         </div>
         <div class="navbar-item">
           <confirm-button option1='is-success' option2='is-primary' @confirm='confirm'>確認</confirm-button>
@@ -60,6 +60,12 @@ export default {
       type: Array
     },
     csvfile:{
+      type: String
+    },
+    loadingsave:{
+      type: String
+    },
+    loadingck:{
       type: String
     }
   },

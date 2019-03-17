@@ -10,7 +10,7 @@
 import IconText from "@/components/atoms/Text/IconText"
 
 export default {
-  name: 'BaseCard',
+  name: 'HeaderCard',
   components:{
     IconText: IconText
   },

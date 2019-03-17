@@ -8,6 +8,11 @@ import { withKnobs, text, number } from '@storybook/addon-knobs';
 import BaseCard from "./../../../components/molecules/Card/BaseCard.vue";
 import HeaderCard from "./../../../components/molecules/Card/HeaderCard.vue";
 import CheckCard from "./../../../components/molecules/Card/CheckCard.vue";
+import InputyearmonthCard from "./../../../components/molecules/Card/InputyearmonthCard.vue";
+import InputgroupmemberCard from "./../../../components/molecules/Card/InputgroupmemberCard.vue";
+import UploadFileCard from "./../../../components/molecules/Card/UploadFileCard.vue";
+
+
 
 const Home = { template: "<div>Home</div>"};
 const About = { template: "<div>About</div>" };
@@ -76,6 +81,66 @@ storiesOf("molecules-Card", module)
       template: `
         <div style="display: flex;">
           <check-card :out='out' :groupindex=0 :index=0 :checkcount=checkcount :option1='option1'/>
+        </div>`
+    }))
+  ).add(
+    "InputyearmonthCardのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { InputyearmonthCard },
+      data() {
+        return {
+        }
+      },
+      methods:{
+        selectValueYear(e) {
+          console.log('molecules', e)
+        },
+        selectValueMonth(e) {
+          console.log('molecules', e)
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <inputyearmonth-card @selectValueYear='selectValueYear' @selectValueMonth='selectValueMonth'/>
+        </div>`
+    }))
+  ).add(
+    "InputgroupmemberCardのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { InputgroupmemberCard },
+      data() {
+        return {
+        }
+      },
+      methods:{
+        selectGroup(e) {
+          console.log('molecules', e)
+        },
+        selectMember(e) {
+          console.log('molecules', e)
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <inputgroupmember-card @selectGroup='selectGroup' @selectMember='selectMember'/>
+        </div>`
+    }))
+  ).add(
+    "UploadFileCardのsample",
+    withNotes(MarkdownText)(() => ({
+      components: { UploadFileCard },
+      data() {
+        return {
+        }
+      },
+      methods:{
+        setCsvtext(upLoadArray) {
+          console.log('molecules', upLoadArray)
+        }
+      },
+      template: `
+        <div style="display: flex;">
+          <uploadFile-card @setCsvtext='setCsvtext'/>
         </div>`
     }))
   );

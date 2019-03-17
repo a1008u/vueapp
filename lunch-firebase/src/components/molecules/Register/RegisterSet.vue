@@ -1,25 +1,28 @@
 <template>
   <div id="RegisterSet">
     <div v-if='registerState'>
-      {{resultUpdate}}<br />
+      <returnhomeicon-text :text="resultUpdate" iconoption='check-circle'/>
     </div>
     <div v-else>
       <button-set
       :buttonState='buttonState'
       :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile'
-      @save='save' @confirm='confirm' @fix='fix' @check='ck' />
+      :loadingsave='loadingsave' :loadingck='loadingck'
+      @save='save' @confirm='confirm' @fix='fix' @check='check' />
     </div>
   </div>
 </template>
 
 <script>
 import ButtonSet from "@/components/molecules/Button/ButtonSet"
+import ReturnhomeiconText from "@/components/atoms/Text/ReturnhomeiconText"
 
 export default {
   name: 'RegisterSet',
-  props:['buttonState','registerState','resultUpdate','csvteam','csvfile','csvcolume'],
+  props:['buttonState','registerState','resultUpdate','csvteam','csvfile','csvcolume','loadingsave','loadingck'],
   components:{
-    ButtonSet:ButtonSet
+    ButtonSet:ButtonSet,
+    ReturnhomeiconText:ReturnhomeiconText
   },
   data(){
     return {

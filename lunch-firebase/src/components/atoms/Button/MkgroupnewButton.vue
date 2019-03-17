@@ -1,8 +1,8 @@
 <template>
-  <div id="SaveButton">
-    <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '',loadingsave ? loadingsave: '']"
+  <div id="MkgroupnewButton">
+    <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '']"
     :name="name"
-    @click="save('save')">
+    @click="groupListMk()">
       <slot/>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'SaveButton',
+  name: 'MkgroupnewButton',
   data(){
     return {
     }
@@ -24,16 +24,13 @@ export default {
     },
     option2: {
       type: String
-    },
-    loadingsave:{
-      type: String
     }
   },
   components:{
   },
   methods:{
-    save(e) {
-      this.$emit('save', e)
+    groupListMk(e) {
+      this.$emit('groupListMk', e)
     },
   },
   computed:{

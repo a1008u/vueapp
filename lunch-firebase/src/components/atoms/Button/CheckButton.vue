@@ -1,6 +1,6 @@
 <template>
   <div id="CheckButton">
-    <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '']"
+    <div :class="['button',(option1 ? option1 : ''),option2 ? option2 : '',loadingck? loadingck : '']"
     :name="name"
     @click="check('check')">
       <slot/>
@@ -23,6 +23,9 @@ export default {
       type: String
     },
     option2: {
+      type: String
+    },
+    loadingck: {
       type: String
     }
   },

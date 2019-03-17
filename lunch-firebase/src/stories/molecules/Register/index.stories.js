@@ -16,6 +16,7 @@ storiesOf("molecules-RegisterSet", module)
           buttonState: false,
           registerState: false,
           resultUpdate: "test",
+          loading:"",
           csvteam:[
             {"id":1,"グループ":1,"名前1":"test1","名前2":"test2","名前3":"test3","名前4":"test4"},
             {"id":2,"グループ":2,"名前1":"test1","名前2":"test2","名前3":"test3","名前4":"test4"},
@@ -35,6 +36,12 @@ storiesOf("molecules-RegisterSet", module)
       methods:{
         save(e) {
           this.$emit('save', e)
+          this.loading = 'is-loading'
+          if(this.loading === 'is-loading') {
+            setTimeout(()=>{
+              this.loading = '';
+            }, 1000);
+          }
         },
         confirm(e) {
           this.$emit('confirm', e)
@@ -50,7 +57,7 @@ storiesOf("molecules-RegisterSet", module)
       template: `
         <register-set
           :registerState='registerState' :resultUpdate='resultUpdate'
-          :buttonState='buttonState' :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile'
+          :buttonState='buttonState' :csvteam='csvteam' :csvcolume='csvcolume' :csvfile='csvfile' :loading='loading'
           @save='save' @confirm='confirm' @fix='fix' @check='ck'
         />
         `

@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import axios from 'axios';
-import { importMembers } from '../../group/member.js'
+// import {mapGetters} from 'vuex';
+// import axios from 'axios';
+// import { importMembers } from '../../group/member.js'
 import csv from 'csv-parser';
 import fileReaderStream from 'filereader-stream';
 const fs = require('fs')
@@ -35,7 +35,7 @@ export default {
       Fileselect:'csvファイルをドラックか選択してください',
     }
   },
-  props:['targetGroup'],
+  // props:['targetGroup'],
   methods:{
     onDrop:function(event){
       const fileList = event.target.files ? event.target.files: event.dataTransfer.files;
