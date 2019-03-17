@@ -1,20 +1,12 @@
 <template>
   <div id="app">
     <navbar />
-
-    <section class="section">
-      <div class="container">
-        <div class="notification">
-          <router-view></router-view>
-        </div>
-      </div>
-    </section>
-
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar/Navbar.vue';
+import Navbar from './components/molecules/Nav/Navbar';
 
 export default {
   name: 'app',
@@ -29,6 +21,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 </style>
+

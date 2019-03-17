@@ -162,6 +162,7 @@ export default {
 
       console.log('out1 : ', this.out1)
       console.log('out2 : ', this.out2)
+      console.table(this.out2)
       console.log('out3 : ', this.out3)
       console.log('out4 : ', this.out4)
       console.log('out5 : ', this.out5)

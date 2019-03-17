@@ -40,6 +40,8 @@ export async function updateFireStoreToGroupTotal(batch, data) {
 
 export async function setFirestoreToTotal(batch, year, month, tempMembers){
 
+  debugger;
+  
   const groupV = {};
   groupV.id = month;
   groupV.count = tempMembers.length;
