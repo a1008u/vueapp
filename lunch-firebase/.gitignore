@@ -79,3 +79,5 @@ typings/
 .fusebox/
 
 storybook-static/
+
+.package-lock.json
