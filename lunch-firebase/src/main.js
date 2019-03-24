@@ -24,18 +24,9 @@ const router = new VueRouter({
       component: () => import("./pages/BackNumberMenu.vue")
     },
     {
-      path: "/grouplist",
-      component: () => import("./components/GroupMk/GroupList.vue")
-    },
-    {
-      path: "/grouplistcheck",
-      component: () => import("./components/GroupMk/GroupListCheck.vue")
-    },
-    {
       path: "/backnumber/:yearmonth",
       name: "backnumber",
       component: () => import("./pages/BacknumberContents.vue"),
-      // component: () => import("./components/backnumber/BackNumber.vue"),
       props: true
     }
   ]

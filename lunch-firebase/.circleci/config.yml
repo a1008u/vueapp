@@ -2,9 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:11.12.0
     branches:
       only:
-        - lunch
+        - fix_circleci
     steps:
       - run: echo "hello world"

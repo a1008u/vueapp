@@ -12,7 +12,6 @@ import Firestore from './Firestore';
  * @param {*} tempMembers : 登録用のグループ
  */
 export async function exe(year, month, tempMembers) {
-  debugger;
   const batch = db.batch();
 
   // totalの登録 -------------------------------
@@ -35,14 +34,12 @@ export async function exe(year, month, tempMembers) {
 }
 
 /**
- * TODO:FireStoreに何も無い時の処理がバグっている（考慮していない）
+ *
  * @param {*} batch 
  * @param {*} year 
  * @param {*} month 
  */
 export async function saveTotalFirestore(batch, year, month){
-
-  debugger;
 
   let [yearmonths, groupTotalTargets] = await getExitTotal();
   if (yearmonths.includes(`${year}${month}`)) {
