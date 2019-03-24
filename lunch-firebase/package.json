@@ -67,6 +67,9 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.29.6"
   },
+  "resolutions": {
+    "**/event-stream": "^4.0.1"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
