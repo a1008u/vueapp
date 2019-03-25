@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/vue";
 import VueInfoAddon from "storybook-addon-vue-info";
 import { withNotes } from '@storybook/addon-notes'
-import { withKnobs, text, number } from '@storybook/addon-knobs';
+import { withKnobs, text} from '@storybook/addon-knobs';
 import StoryRouter from "storybook-vue-router";
 import MarkdownText from "./MarkdownText.md";
 import BaseText from "./../../../components/atoms/Text/BaseText.vue";

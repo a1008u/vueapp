@@ -1,7 +1,7 @@
 <template>
   <div id='LunchIcon' class="navbar-brand">
     <router-link class="navbar-brand" to="/">
-      <img src="./lunch.png" class="lunch" alt="Have Fun Lunch" >
+      <img src="../../../assets/lunch.png" class="lunch" alt="Have Fun Lunch" >
     </router-link>
   </div>
 </template>

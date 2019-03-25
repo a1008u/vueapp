@@ -3,7 +3,7 @@ import VueInfoAddon from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
-import { withKnobs, text, number } from '@storybook/addon-knobs';
+import { withKnobs, text} from '@storybook/addon-knobs';
 
 import BaseCard from "./../../../components/molecules/Card/BaseCard.vue";
 import HeaderCard from "./../../../components/molecules/Card/HeaderCard.vue";

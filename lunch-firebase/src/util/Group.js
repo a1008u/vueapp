@@ -16,7 +16,7 @@ const mkCkGroups = (tempMembers, selectedGroupNum) => {
 }
 
 const mkDabuleCkGroupList = (ckGroups, storeMembers) => {
-  console.log(' --- mkDabuleCkGroupList --- ')
+  // console.log(' --- mkDabuleCkGroupList --- ')
   let dabuleCkGroupList = [];
   let dabuleCkGroup = [];
 
@@ -37,7 +37,7 @@ const mkDabuleCkGroupList = (ckGroups, storeMembers) => {
 }
 
 const mkOutGroup = (ckGroups, dabuleCkGroupList) => {
-  console.log(' --- mkOutGroup --- ')
+  // console.log(' --- mkOutGroup --- ')
   let outGroup = [];
   ckGroups.forEach((members, index) => {
     const outMember = members.filter(member => dabuleCkGroupList[index].includes(member))
@@ -47,7 +47,7 @@ const mkOutGroup = (ckGroups, dabuleCkGroupList) => {
 }
 
 const mkCkGroup = (group) => {
-  console.log(' --- ck --- ')
+  // console.log(' --- ck --- ')
   const ckGroups = [];
   group.forEach(glists => {
     glists.forEach( glist => {

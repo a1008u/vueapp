@@ -20,8 +20,8 @@ export async function exe(year, month, tempMembers) {
   // -------------------------------
   const resultGroup = (resultTotal) ? await Firestore.setFirestoreToTotal(batch, year, month, tempMembers) : false;
 
-  console.log('resultTotal : ', resultTotal)
-  console.log('resultGroup : ', resultGroup)
+  // console.log('resultTotal : ', resultTotal)
+  // console.log('resultGroup : ', resultGroup)
 
   if (resultTotal && resultGroup) {
     return batch
@@ -65,7 +65,7 @@ export async function saveTotalFirestore(batch, year, month){
     newTarget.targetyear = year
     newTarget.totalmonth = [month]
     groupTotalTargets.push(newTarget)
-    console.log('groupTotalTargetNew : ', groupTotalTargets)
+    // console.log('groupTotalTargetNew : ', groupTotalTargets)
     return await Firestore.updateFireStoreToGroupTotal(batch, groupTotalTargets)
   }
 

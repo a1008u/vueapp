@@ -22,7 +22,6 @@
 
 <script>
 import {mapGetters} from 'vuex';
-import axios from 'axios';
 import VueCsvDownloader from 'vue-csv-downloader';
 
 import db from "@/firebase/init";

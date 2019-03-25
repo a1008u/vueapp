@@ -4,7 +4,7 @@ import { withNotes } from '@storybook/addon-notes'
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
 
-import NavbarItem from "./../../../components/atoms/Nav/NavbarItem.vue";
+import NavbarItem from "@/components/atoms/Nav/NavbarItem";
 
 // router用のサンプル
 const Home = { template: "<div>Home</div>"};
