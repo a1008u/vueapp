@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from '@storybook/addon-notes'
 import { withKnobs, text} from '@storybook/addon-knobs';
 import StoryRouter from "storybook-vue-router";
@@ -14,7 +14,7 @@ const Home = { template: "<div>Home</div>"};
 const About = { template: "<div>About</div>" };
 
 storiesOf("atoms-Text", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter({}, {
     routes: [

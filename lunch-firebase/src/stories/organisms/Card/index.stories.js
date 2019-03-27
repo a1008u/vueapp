@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
@@ -9,12 +9,11 @@ import CheckCardset from "./../../../components/organisms/Card/CheckCardset.vue"
 import Cardset from "./../../../components/organisms/Card/Cardset.vue";
 
 const Home = { template: "<div>Home</div>"};
-const About = { template: "<div>About</div>" };
 const Back = { template: "<div>Back</div>" };
 
 
 storiesOf("organisms-Card", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(StoryRouter({}, {
         routes: [
           { path: "/", component: Home },

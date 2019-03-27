@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 
 import RegisterSet from "./../../../components/molecules/Register/RegisterSet.vue";
 
 storiesOf("molecules-RegisterSet", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .add(
     "RegisterSetのsample",
     withNotes(MarkdownText)(() => ({

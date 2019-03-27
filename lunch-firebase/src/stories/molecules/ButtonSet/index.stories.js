@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 
 import ButtonSet from "./../../../components/molecules/Button/ButtonSet.vue";
 
 storiesOf("molecules-ButtonSet", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .add(
     "ButtonSetのsample",
     withNotes(MarkdownText)(() => ({

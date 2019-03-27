@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import { withInfo } from "storybook-addon-vue-info";
 import { withNotes } from '@storybook/addon-notes'
 import { withKnobs, text } from '@storybook/addon-knobs';
 import MarkdownText from "./MarkdownText.md";
@@ -7,7 +7,7 @@ import InputText from "./../../../components/atoms/Input/InputText.vue";
 
 
 storiesOf("atoms-Input", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .add(
     "InputTextのsample1",

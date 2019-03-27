@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
@@ -7,12 +7,11 @@ import StoryRouter from "storybook-vue-router";
 import BacknumberList from "./../../../components/organisms/Backnumber/BacknumberList.vue";
 
 const Home = { template: "<div>Home</div>"};
-const About = { template: "<div>About</div>" };
 const Back = { template: "<div>Back</div>" };
 
 
 storiesOf("organisms-Backnumber", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(StoryRouter({}, {
         routes: [
           { path: "/", component: Home },

@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
@@ -12,7 +12,7 @@ const Back = { template: "<div>Back</div>" };
 
 
 storiesOf("organisms-Mkgroup", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(StoryRouter({}, {
         routes: [
           { path: "/", component: Home },

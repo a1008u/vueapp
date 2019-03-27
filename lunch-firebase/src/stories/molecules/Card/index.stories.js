@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import VueInfoAddon from "storybook-addon-vue-info";
+import {withInfo} from "storybook-addon-vue-info";
 import { withNotes } from "@storybook/addon-notes";
 import MarkdownText from "./MarkdownText.md";
 import StoryRouter from "storybook-vue-router";
@@ -19,7 +19,7 @@ const About = { template: "<div>About</div>" };
 const Back = { template: "<div>Back</div>" };
 
 storiesOf("molecules-Card", module)
-  .addDecorator(VueInfoAddon)
+  .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter({}, {
         routes: [
